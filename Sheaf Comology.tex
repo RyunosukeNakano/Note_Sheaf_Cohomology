@@ -1,0 +1,617 @@
+\documentclass[a4paper,10pt,dvipdfmx]{jsreport}
+
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{intersections, calc, arrows}
+\usepackage{mathrsfs}%花文字
+\usepackage{amssymb}%フラクトゥールと黒板文字
+\usepackage{amsthm}
+\usepackage{ascmac}%itembox
+\usepackage{amsmath}
+
+
+
+\newenvironment{theorem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{theorem*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{defi}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{theorem}. ({#1}})}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{defi*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{lem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{theorem}. ({#1}})}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{lem*}[1]{\refstepcounter{theorem}\label{#1}\begin{itembox}[l]{\underline{Lemma \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{prop}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{theorem}. ({#1}})}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{prop*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{theorem}. }}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{rem}{\refstepcounter{theorem}\begin{flushleft} \underline{Remark \arabic{theorem}.} \end{flushleft}\vspace{-1zh}\ }{}
+\newenvironment{note}{\begin{flushleft} \underline{Notation.} \end{flushleft}\vspace{-1zh}\ }{}
+\newenvironment{eg}[1]{\refstepcounter{theorem}\begin{flushleft} \underline{Exempli gratia \arabic{theorem}. ({#1})} \end{flushleft}\vspace{-1zh}\ }{}
+\renewenvironment{proof}{\begin{flushleft} \underline{Proof.} \end{flushleft}\vspace{-1zh}\ }{\qed}
+
+
+
+\newcommand{\st}{{\rm\ s.t.\ }}
+\newcommand{\openset}{\underset{{\rm open}}{\subset}}
+\newcommand{\closedset}{\underset{{\rm closed}}{\subset}}
+\renewcommand{\Re}[1]{{{\rm Re\ }{#1}}}
+\renewcommand{\Im}[1]{{{\rm Im\ }{#1}}}
+\newcommand{\Res}[2]{{{\rm Res}\left( {#1},{#2} \right)}}
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\id}{\textrm{id}}
+
+
+\theoremstyle{definition}
+
+% ######## measure #########
+% # mm = 1mm = 2.85pt      #
+% # cm = 10mm = 28.5pt     #
+% # in = 25.4mm = 72.27pt  #
+% # pt = 0.35mm = 1pt      #
+% # em = width of [M]      #
+% # ex = height of [x]     #
+% # zw = width of [Kanji]  #
+% # zh = height of [Kanji] #
+% ##########################
+% ##################### Portrait Setting #########################
+% # TOP = 1inch + \voffset + \topmargin + \headheight + \headsep #
+% #     = 1inch + 0pt + 4pt + 20pt + 18pt (default)              #
+% # BOTTOM = \paperheight - TOP -\textheight                     #
+\setlength{\textheight}{\paperheight}   % 紙面縦幅を本文領域にする（BOTTOM=-TOP）
+\setlength{\topmargin}{4.6truemm}       % 上の余白を30mm（=1inch+4.6mm）に
+\addtolength{\topmargin}{-\headheight}  %
+\addtolength{\topmargin}{-\headsep}     % ヘッダの分だけ本文領域を移動させる
+\addtolength{\textheight}{-60truemm}    % 下の余白も30mm（BOTTOM=-TOPだから+TOP+30mm）
+% #################### Landscape Setting #######################
+% # LEFT = 1inch + \hoffset + \oddsidemargin (\evensidemargin) #
+% #      = 1inch + 0pt + 0pt                                   #
+% # RIGHT = \paperwidth - LEFT - \textwidth                    #
+% ##############################################################
+\setlength{\textwidth}{\paperwidth}     % 紙面横幅を本文領域にする（RIGHT=-LEFT）
+\setlength{\oddsidemargin}{-9.4truemm}  % 左の余白を25mm(=1inch-0.4mm)に
+\setlength{\evensidemargin}{-9.4truemm} %
+\addtolength{\textwidth}{-41truemm}     % 右の余白も25mm（RIGHT=-LEFT）
+
+\newcounter{theorem}[section]
+\setcounter{theorem}{0}
+\begin{document}
+\title{層係数コホモロジーの理論}
+\author{@Big\_ToiletPaper}
+\maketitle
+これは小木曽啓示『代数曲線論』の5章を読み勉強した内容をノートにしたものである.
+\begin{defi*}
+    \(X\) を位相空間, \(\mathcal{U} = \{U_i\}_{i\in I}\) を開被覆とする. このとき, \(\iota = (i_0, i_1, \ldots , i_q) \in I^{q+1}\) に対して,
+    \[
+        U_\iota = U_{i_0 i_1 \cdots i_q} = U_{i_0} \cap \cdots \cap U_{i_q}
+    \]
+    と定める.
+\end{defi*}
+
+\begin{defi}{\(q\)-コチェイン群}
+    上の状況に加え \(\mathscr{F}\) を \(X\) 上の層とする. このとき, \(q \in \mathbb{N}\) に対して
+    \[
+        C^q(\mathcal{U}, \mathscr{F}) := \prod_{\iota \in I^{q+1}} \mathscr{F}(U_\iota)
+    \]
+    を層 \(\mathscr{F}\) の開被覆 \(\mathcal{U}\) に関する\v{C}ech \(q\)-コチェイン群という(the \v{C}ech \(q\)-cochain group of the sheaf \(\mathscr{F}\) with respect to the open covering \(\mathcal{U}\)). また, \v{C}ech \(q\)-コチェイン群の元を\v{C}ech \(q\)-コチェインという. コチェイン群には \(\mathscr{F}\) と同じ代数構造が入る.
+\end{defi}
+
+\begin{eg}{\(0,1,2\)-コチェイン群の元}
+    \vspace{-2.5zh}
+    \begin{enumerate}
+        \item \(0\)-コチェイン群は
+        \[
+            C^0 (\mathcal{U}, \mathscr{F}) = \prod_{i \in I} \mathscr{F}(U_i)
+        \]
+        であるから, \(0\)-コチェインは \((f_i)_{i \in I},\ f_i \in \mathscr{F}(U_i)\) で与えられる.
+        \item \(1\)-コチェイン群は
+        \[
+            C^1 (\mathcal{U}, \mathscr{F}) = \prod_{i,j \in I} \mathscr{F}(U_{ij})
+        \]
+        であるから, \(1\)-コチェインは \(f_{ij} \in \mathscr{F}(U_{ij})\) 達によって \((f_{ij})_{(i,j)\in I^2}\) という形をしている.
+        \item \(2\)-コチェインは \(f_{ijk} \in \mathscr{F}(U_{ijk})\) によって \((f_{ijk})_{(i,j,k)\in I^3}\) と表される.
+    \end{enumerate}
+\end{eg}
+
+\(0\)-コチェイン \((f_i)_{i\in I}\) が貼り合わさり大域的な元 \(f\in \mathscr{F}(X)\) を定めるためには, 各開集合 \(U_i,\ U_j\) に関して \(f_i |U_{ij} = f_j|U_{ij}\) が成立すればよい. これは \(f_{ij} := f_j |U_{ij} - f_i|U_{ij}\) が \(0\) になることを意味し, \((f_i)_{i\in I}\) が線形写像 \(\partial^0 \colon C^0 (\mathcal{U}, \mathscr{F}) \to C^1 (\mathcal{U}, \mathscr{F});(f_i)_{i\in I} \mapsto (f_{ij})_{(i,j)\in I^2}\) の核に入ることを意味する.
+
+\begin{defi}{境界作用素}
+    コチェイン群の間の準同型 \(\partial^q \colon C^q (\mathcal{U}, \mathscr{F}) \to C^{q+1} (\mathcal{U}, \mathscr{F})\) を \(f = (f_\iota)_{\iota \in I^{q+1}}\) に対して次のように定める:
+    \[
+        \partial^q f := \left( \sum_{k=0}^{q+1} (-1)^k f_{i_0 i_1 \cdots i_{k-1} i_{k+1} \cdots i_{q+1}} | U_{i_0 i_1 \cdots i_{q+1}} \right)_{(i_0 i_1 \cdots i_{q+1}) \in I^{q+2}}
+    \]
+    \(f_{i_0 i_1 \cdots i_{k-1} i_{k+1} \cdots i_{q+1}}\) は \(\mathscr{F}(U_{i_0 i_1 \cdots i_{k-1} i_{k+1} \cdots i_{q+1}})\) の元であり, それを \(U_{i_0 i_1 \cdots \cdots i_{q+1}}\) に制限したものとなる. 
+\end{defi}
+
+
+\begin{prop*}
+    \(\partial^{q+1} \circ \partial ^q = 0\). 即ち \(\Im(\partial ^q) \subset \ker(\partial ^{q+1})\) である.
+\end{prop*}
+\begin{proof}
+    各 \(\iota = (i_0, i_1, \ldots, i_{q+1}) \in I^{q+2}\) に対して, \(\partial \circ \partial\) によって写ったものは, \(\iota\) から異なる2つの添字 \(i_j,\ i_k\) を抜いたものになる. この操作の順番により符号が入れ替わるため和を取ると \(0\) となる.
+\end{proof}
+
+従ってコチェイン群と境界作用素によって複体 \((C^\bullet(\mathcal{U}, \mathscr{F}), d^\bullet)\) を得る.
+
+\begin{defi}{\(q\)-コサイクル, \(q\)-コバウンダリー, \(q\) 次\v{C}echコホモロジー}
+    \vspace{-2zh}
+    \begin{enumerate}
+        \item \(Z^q(\mathcal{U},\mathscr{F}) := \ker \partial^q\) とおき, \(Z^q(\mathcal{U},\mathscr{F})\) の元を \(\mathscr{F}\) の \(\mathcal{U}\) に関する\v{C}ech \(q\)-コサイクル(\v{C}ech \(q\)-cocycle)という.
+        \item \(B^q(\mathcal{U},\mathscr{F}) := \Im \partial^{q-1}\) とおき, \(B^q(\mathcal{U},\mathscr{F})\) の元を \(\mathscr{F}\) の \(\mathcal{U}\) に関する\v{C}ech \(q\)-コバウンダリー(\v{C}ech \(q\)-boundary)という.
+        \item 商空間 \(H^q(\mathcal{U},\mathscr{F}):=Z^q(\mathcal{U},\mathscr{F})/B^q(\mathcal{U},\mathscr{F})\) を \(\mathscr{F}\) の \(\mathcal{U}\) に関する \(q\) 次\v{C}echコホモロジー群(\(q\)-th \v{C}ech cohomology group)という.
+    \end{enumerate}
+\end{defi}
+
+\begin{eg}{コサイクルの例}
+    \vspace{-2.5zh}
+    \begin{enumerate}
+        \item \(0\)-コサイクルは各 \(U_i \cap U_j\) 上 \(f_i = f_j \) が成立するようなものから成る.
+        \item \(1\)-コサイクルは \(f_{ij} \in \mathscr{F}(U_{ij})\) によって, \(f_{jk}-f_{ik} + f_{ij} = 0\) を満たすものから成る. このことから \(f_{ii} = 0\), \(f_{ij} = -f_{ji}\) が従う.
+    \end{enumerate}
+\end{eg}
+
+\begin{rem}
+    \(H^1(\mathcal{U},\mathscr{F})\) の元は, \(Z^1(\mathcal{U},\mathscr{F})\) の元, つまり \((f_{ij})\in C^1(\mathcal{U},\mathscr{F})\) で \(f_{jk} - f_{ik} + f_{ij} = 0\) を満たすようなもので代表される.
+\end{rem}
+
+\begin{defi}{細分}
+    \(\mathcal{U} = \{U_i\}_{i\in I}\), \(\mathcal{V} = \{V_j\}_{j\in J}\) を \(X\) の開被覆とする. このとき, 開被覆 \(\mathcal{V}\) が開被覆 \(\mathcal{U}\) の細分である(\(\mathcal{V}\) is a refinement of \(\mathcal{U}\))とは, 各 \(j\in J\) について, \(V_j \subset U_{\pi(j)}\) となるような写像 \(\pi \colon J \to I\) が存在することと定める. このような写像 \(\pi\) のことを細分写像(refinement mapping)といい, \(\mathcal{V}\) が \(\mathcal{U}\) の細分であるとき \(\mathcal{V} > \mathcal{U}\) と表す.
+\end{defi}
+
+\begin{rem}
+    細分写像は \(V_j \subset U_i\) なる \(U_i\) の取り方に依るから一般に一意ではないが, 細分写像から誘導される複体の射はホモトピックであるためホモロジー群の間の写像は一意に定まる.
+\end{rem}
+
+\begin{defi*}
+    \(\mathcal{V}>\mathcal{U}\) とし, \(\pi\) を細分写像とする. このとき, 複体の間の写像 \(\pi^\ast \colon C^\bullet(\mathcal{U}, \mathscr{F}) \to C^\bullet(\mathcal{V}, \mathscr{F})\) を次のように定める: 準同型 \(\pi^{\ast,q} \colon C^q(\mathcal{U}, \mathscr{F}) \to C^q(\mathcal{V}, \mathscr{F})\) を \(f = (f_{i_0 i_1 \cdots i_{q}})\) に対し,
+    \[
+        \pi^{\ast,q}f = \left( f_{\pi(j_0)\pi(j_1)\cdots \pi(j_q)}|V_{j_0j_1\cdots j_q} \right)_{(j_0, j_1, \cdots, j_{q}) \in J^{q+1}}
+    \]
+    と定める.  \(V_{j_0j_1\cdots j_q} \subset U_{\pi(j_0)\pi(j_1)\cdots \pi(j_q)}\) となるため \(V_{j_0j_1\cdots j_q}\) に制限ができる.
+\end{defi*}
+
+\begin{rem}\label{rem:refinement mapping}
+    \(\mathcal{W} = \{W_k\}_{k\in K} > \mathcal{V} = \{V_j\}_{j\in J} > \mathcal{U} = \{U_i\}_{i\in I}\) とするとき, 細分写像 \(\sigma \colon K\to J\), \(\tau \colon J \to I\) について \(\sigma \circ \tau\) もまた細分写像であり, 定義から明らかに
+    \[
+        (\sigma \circ \tau)^{\ast, q} = \sigma^{\ast, q} \circ \tau^{\ast, q}
+    \]
+    が従う.
+\end{rem}
+
+\begin{prop*}
+    \(\pi^\ast \colon C^\bullet(\mathcal{U}, \mathscr{F}) \to C^\bullet(\mathcal{V}, \mathscr{F})\) は複体の射である. 即ち, 各 \(q\in \mathbb{Z}\) に対して次の図式を可換にする:
+    \[\begin{tikzcd}
+        {C^q(\mathcal{U}, \mathscr{F})} & {C^{q+1}(\mathcal{U}, \mathscr{F})} \\
+        {C^{q}(\mathcal{V}, \mathscr{F})} & {C^{q+1}(\mathcal{V}, \mathscr{F})}
+        \arrow["{\partial^{q,\mathcal{V}}}", from=2-1, to=2-2]
+        \arrow["{\partial^{q,\mathcal{U}}}", from=1-1, to=1-2]
+        \arrow["{\pi^{\ast, q+1}}", from=1-2, to=2-2]
+        \arrow["{\pi^{\ast, q}}"', from=1-1, to=2-1]
+    \end{tikzcd}\]
+\end{prop*}
+\begin{proof}
+    \(f = (f_{i_0 i_1 \cdots i_{q}}) \in C^q(\mathcal{U}, \mathscr{F})\) とする.
+    \begin{align*}
+        &\partial^{q,\mathcal{V}} \circ \pi^{\ast,q}(f)\\
+        &=\partial^{q,\mathcal{V}} \left( \left( f_{\pi(j_0)\pi(j_1)\cdots \pi(j_q)}|V_{j_0j_1\cdots j_q} \right)_{(j_0, j_1, \cdots, j_{q}) \in J^{q+1}} \right)\\
+        &= \left( \sum_{k=0}^{q+1} (-1)^k f_{\pi(j_0)\pi(j_1)\cdots \pi(j_{k-1}) \pi(j_{k+1}) \cdots  \pi(j_{q+1})}|V_{j_0j_1\cdots j_{q+1}} \right)_{(j_0,j_1,\cdots ,j_{q+1}) \in I^{q+2}}
+    \end{align*}
+    であり, 一方
+    \begin{align*}
+        &\pi^{\ast,q+1}\circ\partial^{q, \mathcal{U}}(f)\\
+        &= \pi^{\ast,q+1}\left( \left( \sum_{k=0}^{q+1} (-1)^k f_{i_0 i_1 \cdots i_{k-1} i_{k+1} \cdots i_{q+1}} | U_{i_0 i_1 \cdots i_{q+1}} \right)_{(i_0 i_1 \cdots i_{q+1}) \in I^{q+2}} \right)\\
+        &= \left( \sum_{k=0}^{q+1} (-1)^k f_{\pi(j_0)\pi(j_1)\cdots \pi(j_{k-1}) \pi(j_{k+1}) \cdots  \pi(j_{q+1})}|V_{j_0j_1\cdots j_{q+1}} \right)_{(j_0,j_1,\cdots ,j_{q+1}) \in I^{q+2}}
+    \end{align*}
+    であるから図式を可換にする.
+\end{proof}
+
+よって次が従う.
+\begin{prop*}
+    \(\pi^{\ast,q}\) はコサイクルをコサイクルに, コバウンダリーをコバウンダリーに写す. つまり, 次のような準同型が得られる.
+    \begin{align*}
+        &\pi^{\ast,q}\colon Z^q(\mathcal{U},\mathscr{F}) \to Z^q (\mathcal{V},\mathscr{F})\\
+        &\pi^{\ast,q}\colon B^q(\mathcal{U},\mathscr{F}) \to B^q (\mathcal{V},\mathscr{F})
+    \end{align*}
+\end{prop*}
+これによりコホモロジー群の間に準同型が得られた.
+\begin{defi*}
+    \(H(\pi^{\ast,q}) \colon H^q(\mathcal{U},\mathscr{F}) \to H^q(\mathcal{V},\mathscr{F});[a] \mapsto [\pi^{\ast,q}(a)]\), \(a\in Z^q(\mathcal{U},\mathscr{F})\)
+\end{defi*}
+
+次に細分写像がホモトピックであることを示す.
+\begin{prop*}
+    \(\pi,\rho\) を細分写像とする. このとき, \(\pi^\ast\) と \(\rho^\ast\) はホモトピックである. 即ち, 各 \(q\in \mathbb{Z}\) に対して準同型 \(k^q \colon C^q(\mathcal{U},\mathscr{F}) \to C^{q-1}(\mathcal{V},\mathscr{F})\) が存在して
+    \[
+        \pi^{\ast,q}-\rho^{\ast,q} = \partial^{q-1,\mathcal{V}}\circ k^q + k^{q+1} \circ \partial^{q,\mathcal{U}}
+    \]
+    を満たす.
+\end{prop*}
+\begin{proof}
+    % \(f=(f_{i_0 \cdots i_q})_{(i_0,\ldots,i_q) \in I^{q+1}} \in C^q(\mathcal{U},\mathscr{F})\) に対して,
+    % \[
+    %     k^q(f) = \left( \sum_{k=0}^{q-1}(-1)^k f_{\pi(j_0)\cdots \pi(j_k) \rho(j_k) \cdots \rho(j_{q-1})}|V_{j_0\cdots j_k j_k \cdots j_{q-1}} \right)_{(j_0,\ldots, j_{q-1})\in I^q}
+    % \]
+    % と定める. \(V_{j_0\cdots j_k j_k \cdots j_{q-1}} = V_{j_0 \cdots j_{q-1}}\) であるから, 確かに \(C^{q-1}(\mathcal{V},\mathscr{F})\) の元となっている. この写像が求めることを示す. \(f=(f_{i_0 \cdots i_q}) \in C^q(\mathcal{U},\mathscr{F})\) とする. 
+    % \begin{align*}
+    %     &\partial^{q-1,\mathcal{V}}\circ k^q (f)\\
+    %     &= \partial^{q-1,\mathcal{V}}\left( \left( \sum_{k=0}^{q-1}(-1)^k f_{\pi(j_0)\cdots \pi(j_k) \rho(j_k) \cdots \rho(j_{q-1})}|V_{j_0\cdots j_k \cdots j_{q-1}} \right)_{(j_0,\ldots, j_{q-1})\in I^q} \right)\\
+    % \end{align*}
+    % \[
+    %     g_{j_0\cdots j_{q-1}} = \sum_{k=0}^{q-1}(-1)^k f_{\pi(j_0)\cdots \pi(j_k) \rho(j_k) \cdots \rho(j_{q-1})}|V_{j_0\cdots j_k \cdots j_{q-1}}
+    % \]
+    % とおくと,
+    % \[
+    %     \partial^{q-1,\mathcal{V}} \left( (g_{j_0\cdots j_{q-1}})_{(j_0,\ldots, j_{q-1})\in I^q} \right)=\left( \sum_{l=0}^{q} (-1)^l g_{j_0 j_1 \cdots j_{l-1} j_{l+1} \cdots j_{q}} | V_{j_0 j_1 \cdots j_{q}} \right)_{(j_0 j_1 \cdots j_{q}) \in J^{q+1}}
+    % \]
+    % であるから,
+    % \begin{align*}
+    %     &\sum_{l=0}^{q} (-1)^l g_{j_0 j_1 \cdots j_{l-1} j_{l+1} \cdots j_{q}} | V_{j_0 j_1 \cdots j_{q}}\\
+    %     &=\sum_{k=0}^{q-1}(-1)^k \sum_{l=0}^{k-1} (-1)^l f_{\pi(j_0) \cdots \pi(j_{l-1})\pi(j_{l+1}) \cdots \pi(j_k) \rho(j_k) \cdots \rho(j_q)}\\
+    %     &+\sum_{k=0}^{q-1}(-1)^k (-1)^k f_{\pi(j_0) \cdots\pi(j_{k-1}) \pi(j_{k+1}) \rho(j_{k+1}) \cdots \rho(j_q)}\\
+    %     &+\sum_{k=0}^{q-1}(-1)^k \sum_{l=k+1}^{q} (-1)^l f_{\pi(j_0)\cdots \pi(j_k) \rho(j_k) \cdots \rho(j_{l-1})\rho(j_{l+1})  \cdots \rho(j_q)}\\
+    %     &=\sum_{k=0}^{q-1}(-1)^k \sum_{l=0}^{k-1} (-1)^l f_{\pi(j_0) \cdots \pi(j_{l-1})\pi(j_{l+1}) \cdots \pi(j_k) \rho(j_k) \cdots \rho(j_q)}\\
+    %     &+\sum_{k=0}^{q-1}f_{\pi(j_0) \cdots\pi(j_{k-1}) \pi(j_{k+1}) \rho(j_{k+1}) \cdots \rho(j_q)}\\
+    %     &+\sum_{k=0}^{q-1}(-1)^k \sum_{l=k+1}^{q} (-1)^l f_{\pi(j_0)\cdots \pi(j_k) \rho(j_k) \cdots \rho(j_{l-1})\rho(j_{l+1})  \cdots \rho(j_q)}\\
+    % \end{align*}
+    % となる. また,
+    % \[
+    %     k^{q+1} \circ \partial^{q,\mathcal{U}}(f) =k^{q+1}\left( \left( \sum_{k=0}^{q+1} (-1)^k f_{i_0 i_1 \cdots i_{k-1} i_{k+1} \cdots i_{q+1}} | U_{i_0 i_1 \cdots i_{q+1}} \right)_{(i_0 i_1 \cdots i_{q+1}) \in I^{q+2}} \right)
+    % \]
+    % である.
+    % \[
+    %     g_{i_0 \cdots i_{q+1}} = \sum_{k=0}^{q+1} (-1)^k f_{i_0 i_1 \cdots i_{k-1} i_{k+1} \cdots i_{q+1}} | U_{i_0 i_1 \cdots i_{q+1}}
+    % \]
+    % とおく. このとき,
+    % \[
+    %     k^{q+1} \left( \left( g_{i_0 \cdots i_{q+1}} \right)_{(i_0 i_1 \cdots i_{q+1}) \in I^{q+2}} \right)=\left( \sum_{l=0}^{q}(-1)^l g_{\pi(j_0)\cdots \pi(j_l) \rho(j_l) \cdots \rho(j_{q})}|V_{j_0 \cdots j_{q}} \right)_{(j_0,\ldots, j_{q})\in I^{q+1}}
+    % \]
+    % であり,
+    % \begin{align*}
+    %     &\sum_{l=0}^{q}(-1)^l g_{\pi(j_0)\cdots \pi(j_l) \rho(j_l) \cdots \rho(j_{q-1})}\\
+    %     &= \sum_{l=0}^q(-1)^l \sum
+    % \end{align*}
+    面倒臭かった
+\end{proof}
+
+\(f\in Z^q(\mathcal{U},\mathscr{F})\) に対して,
+\begin{align*}
+    \pi^{\ast,q}(f)-\rho^{\ast,q}(f)
+    &= \partial^{q-1,\mathcal{V}}\circ k^q(f) + k^{q+1} \circ \partial^{q,\mathcal{U}}(f)\\
+    &= \partial^{q-1,\mathcal{V}}(k^q(f)) \in B^{q-1}(\mathcal{V},\mathscr{F})
+\end{align*}
+より, \(H(\pi^{\ast,q})([f]) = H(\rho^{\ast,q})([f])\) である. 従って細分写像は\v{C}echコホモロジー群の間に一意的な準同型を定める.
+
+\begin{defi*}
+    \(\mathcal{V}>\mathcal{U}\) の細分写像によって一意的に定まるホモロジー群の間の射を
+    \[
+        \tau_\mathcal{U}^{q, \mathcal{V}} \colon  H^q(\mathcal{U},\mathscr{F}) \to H^q(\mathcal{V},\mathscr{F})
+    \]
+    で表す. 即ち複体 \(H^\bullet (\mathcal{U},\mathscr{F})\) から \(H^\bullet(\mathcal{V},\mathscr{F})\) への射
+    \[
+        \tau_\mathcal{U}^{\mathcal{V}} \colon H^\bullet (\mathcal{U},\mathscr{F}) \to H^\bullet (\mathcal{V},\mathscr{F})
+    \]
+    を得る.
+\end{defi*}
+
+\begin{prop*}
+    \label{hoge}
+    任意の細分 \(\mathcal{W} = \{W_k\}_{k\in K} > \mathcal{V} = \{V_j\}_{j\in J} > \mathcal{U} = \{U_i\}_{i\in I}\) に対して次が成り立つ:
+    \begin{align}
+        \tau_{\mathcal{U}}^\mathcal{W} &= \tau_\mathcal{V}^\mathcal{W} \circ \tau_\mathcal{U} ^\mathcal{V} \label{condition:direct system 1}\\
+        \tau_\mathcal{U}^\mathcal{U} &= \id_{\mathcal{U}} \label{condition:direct system 2}
+    \end{align}
+\end{prop*}
+
+
+\begin{proof}
+    細分写像 \(\sigma \colon K \to J\), \(\tau \colon J \to I\) を取る. このとき, \(\tau \circ \sigma \colon K \to I\) もまた細分写像であるからremark \ref{rem:refinement mapping} より, 各 \(q \in \mathbb{Z}\) と \(f \in Z^q(\mathcal{U},\mathscr{F})\) について, \(H((\tau \circ \sigma)^{\ast, q})([f]) = [(\tau \circ \sigma)^{\ast, q}(f)] = H(\tau^{\ast, q})([\sigma^{\ast, q} (f)]) =H(\tau^{\ast, q}) \circ H(\sigma^{\ast, q})([f])\) となる. 従って式(\ref{condition:direct system 1}) を得る. また, 恒等写像 \(\id_I \colon I \to I\) によって \(\mathcal{U} > \mathcal{U}\) であるから式(\ref{condition:direct system 2})も従う.
+\end{proof}
+
+従って開被覆で添字付けることにより構成される順系 \((H^q(\mathcal{U},\mathscr{F}),\tau_{\mathcal{U}}^\mathcal{V})\) を得る. これにより得られる順極限を \(H^q(X,\mathscr{F})\) とする. 具体的には次のように構成される:
+
+\begin{defi}{\v{C}echコホモロジー群}
+    \(\bigsqcup_{\mathcal{U}} H^q(\mathcal{U},\mathscr{F})\) 上の関係 \(\sim\) を次のように定める: 各 \(a,b \in \bigsqcup_{\mathcal{U}} H^q(\mathcal{U},\mathscr{F})\) に対して, 唯一の開被覆 \(\mathcal{U},\mathcal{V}\) で \(a\in H^q(\mathcal{U},\mathscr{F})\), \(b\in H^q(\mathcal{V},\mathscr{F})\) となるものが存在した. このとき,
+    \[
+        (a,\mathcal{U})\sim (b,\mathcal{V}) \iff \exists \mathcal{W}:\textrm{refinement of }\mathcal{U}\textrm{ and }\mathcal{V}\textrm{ s.t. }\ \tau_{\mathcal{U}}^\mathcal{W}(a) = \tau_{\mathcal{V}}^\mathcal{W}(b)
+    \]
+    この関係は明らかに反射律と対称律を満たす. また, 開被覆 \(\{U_i\}_{i\in I}\), \(\{V_j\}_{j\in J}\) に対して, \(\{U_i \cap V_j\}_{(i,j)\in I\times J}\) もまた開被覆になることから関係 \(\sim\) は同値関係となる. この同値関係によって得られる商群
+    \[
+        H^q(X,\mathscr{F}) := \bigsqcup_{\mathcal{U}} H^q(\mathcal{U},\mathscr{F})/\sim
+    \]
+    を層 \(\mathscr{F}\) の \(q\) 次\v{C}echコホモロジー群という(the \(q\)-th \v{C}ech cohomology group of the sheaf \(\mathscr{F}\)). 
+\end{defi}
+
+\begin{prop*}
+    \(\alpha,\beta \in H^q(X,\mathscr{F})\) とする. このとき, ある開被覆 \(\mathcal{U}\) が存在して, \(a,b\in H^q(\mathcal{U},\mathscr{F})\) によって \(\alpha =  [a],\ \beta=[b]\) と表示できる.
+\end{prop*}
+
+\begin{proof}
+    \(c\in H^q(\mathcal{U}_1,\mathscr{F})\), \(d\in H^q(\mathcal{U}_2,\mathscr{F})\) によって \(\alpha = [c],\ \beta = [d]\) と代表元表示する. このとき, \(\mathcal{U}_k = \{U_{k,i}\}_{i\in I_k} \) とし, \(\mathcal{U} = \{U_{1i} \cap U_{2j}\}_{(i,j) \in I_1 \times I_2}\) とすればこれは \(\mathcal{U}_1,\ \mathcal{U}_2\) の細分になっている. 従って \(a = \tau_{\mathcal{U}_1}^\mathcal{U}(c)\), \(b = \tau_{\mathcal{U}_2}^\mathcal{U} (b)\) とすれば \([a] = [c]\), \([b] = [d]\) であり, \(a,b\in H^q(\mathcal{U},\mathscr{F})\) となっている.
+\end{proof}
+
+\begin{defi*}
+    \(\alpha,\beta \in H^q(X,\mathscr{F})\) とし, \(k,l \in \mathbb{C}\) とする. このとき, \(\alpha = [a], \beta = [b]\) となる \(a,b \in H^q(\mathcal{U}, \mathscr{F})\) が上の命題から取れた. この表示によって
+    \[
+        k\alpha + l \beta := [ka+lb] \in H^q(X,\mathscr{F})
+    \]
+    と定める.
+\end{defi*}
+
+\begin{rem}
+    \(k\alpha + l\beta\) は \(\tau_{\mathcal{U}}^\mathcal{V}\) が準同型(線形写像)であるため代表元表示に依らない.
+\end{rem}
+
+\begin{rem}
+    \(\tau_\mathcal{U}^\mathcal{V}\) の定義から次が成立する:
+    \begin{enumerate}
+        \item 自然な射影 \(\tau_\mathcal{U}^q \colon H^q(\mathcal{U},\mathscr{F}) \to H^q(X,\mathscr{F});a\mapsto [a]\) は準同型である.
+        \item すべての細分 \(\mathcal{V} > \mathcal{U}\) について, \(\tau_\mathcal{U} = \tau_\mathcal{V} \circ \tau_\mathcal{U} ^\mathcal{V}\) が成立.
+        \item \(\tau_{\{X\}}^0\) は次の図式を可換にし, \(\mathscr{F}(X) \simeq H^0 (\{X\},\mathscr{F})\) と \(H^0(X,\mathscr{F})\) の間に同型を与える:
+        \[\begin{tikzcd}
+            {H^0(\mathcal{U},\mathscr{F})} && {H^0(\mathcal{V},\mathscr{F})} \\
+            \\
+            & {H^0(\{X\},\mathscr{F})} \\
+            \\
+            & {H^0(X,\mathscr{F})}
+            \arrow["{\tau_\mathcal{U}^{\mathcal{V},0}}", from=1-1, to=1-3]
+            \arrow["{\tau_\mathcal{U}^0}"', from=1-1, to=5-2]
+            \arrow["{\tau_\mathcal{V}^0}", from=1-3, to=5-2]
+            \arrow["{\tau_\mathcal{U}^{\{X\},0}}", from=1-1, to=3-2]
+            \arrow["{\tau_\mathcal{V}^{\{X\},0}}"', from=1-3, to=3-2]
+            \arrow["{\tau_{\{X\}}}"{pos=0.4}, from=3-2, to=5-2]
+        \end{tikzcd}\]
+        この対応で \(\mathscr{F}(X) = \Gamma(X,\mathscr{F})\) と \(H^0(X,\mathscr{F})\) を同一視する.
+    \end{enumerate}
+\end{rem}
+
+次では \(1\) 次\v{C}echコホモロジー群の性質を述べていく.
+
+\begin{prop*}\label{prop:tau is injective}
+    \(X\) を位相空間, \(\mathcal{U} = \{U_i\}_{i\in I}\), \(\mathcal{V} = \{V_i\}_{j\in J}\) を \(X\) の開被覆とする. このとき, 準同型 \(\tau_\mathcal{U}^{\mathcal{V},1},\ \tau_\mathcal{U}^1\) は単射である.
+\end{prop*}
+
+\begin{proof}
+    \(\tau_\mathcal{U}^{\mathcal{V},1}(\eta) = 0 \in H^1(\mathcal{V}, \mathscr{F}) = Z^1(\mathcal{V}, \mathscr{F}) /B^1(\mathcal{V}, \mathscr{F})\) とする. \(\eta = [(f_{ij})_{i,j\in I}]\), \(f_{ij} \in Z^1(\mathcal{U},\mathscr{F})\) とし, \(\pi \colon J \to I\) を細分写像とする. このとき,
+    \begin{align*}
+        \tau_\mathcal{U}^{\mathcal{V},1}(\eta)
+        &= [\pi((f_{ij})_{i,j\in I})]\\
+        &= [(f_{\pi(k)\pi(l)}|V_{kl})_{k,j\in J}]
+    \end{align*}
+    である. \(g_{kl} = f_{\pi(k)\pi(l)}|V_{kl}\) とおく. このとき, 仮定より \((g_{kl})_{k,l\in J} \in B^0(\mathcal{V},\mathscr{F})\) であるから, \((g_k)_{k\in J} \in C^0(\mathcal{V},\mathscr{F})\) で, \((g_{kl})_{k,l \in J} = \partial^0((g_k)_{k\in J }) = (g_l - g_k |V_{kl})_{k,l \in J}\) となるものが存在する. 各 \(i\in I\) について, \(U_i \cap V_{kl} = (U_i \cap V_k) \cap (U_i \cap V_l)\) 上,
+    \begin{align*}
+        g_l - f_{i\pi(l)}
+        &= f_{\pi(k)\pi(l)} + g_k - f_{i\pi(l)}\\
+        &= g_k + f_{i\pi(l)} + f_{\pi(k)i} - f_{i\pi(l)}\\
+        &= g_k + f_{\pi(k)i} = g_k - f_{i\pi(k)}
+    \end{align*}
+    であるから, \(\{U_i \cap V_k\}_{k\in J}\) を \(U_i\) の開被覆だと思うと, 貼り合わせ条件から \(h_i\in \mathscr{F}(U_i)\) で \(h_i|U_i \cap V_k = g_k - f_{i\pi(k)}\) となるものが取れる. また, 各 \(k\in J\) について, \(U_i \cap U_j \cap V_k = (U_i \cap V_k) \cap (U_j \cap V_k)\) 上,
+    \begin{align*}
+        h_j - h_i |U_{ij} \cap V_k
+        &= g_k - f_{j\pi(k)} - (g_k - f_{i\pi(k)})\\
+        &= f_{i\pi(k)} - f_{j\pi(k)} = f_{ij}
+    \end{align*}
+    であるから, \(\{U_i \cap U_j \cap V_k\}_{k\in J}\) を \(U_i \cap U_j\) の開被覆だと思うと, 貼り合わせ条件から \(U_i \cap U_j\) 上 \(h_i - h_j = f_{ij}\) が成立する. これは \((f_{ij})_{i,j\in I} = \partial^0((h_i)_{i\in I }) \in B^0(\mathcal{U},\mathscr{F})\) を意味する. 従って, \(\eta = [(f_{ij})_{i,j\in I}] =0 \) であるから \(\tau_\mathcal{U}^\mathcal{V}\) は単射である.
+
+    \(\tau_\mathcal{U}\) が単射であることは上から従う. 実際, \(\tau_\mathcal{U}(\eta) = 0\) なら, \v{C}echコホモロジー群の定義から, ある \(\mathcal{U}\) の細分 \(\mathcal{V}\) が存在して, \(\tau_\mathcal{U}^\mathcal{V}(\eta) = 0\) となる. \(\tau_\mathcal{U}^\mathcal{V}\) は単射であるから \(\eta = 0\) となり \(\tau_\mathcal{U}\) が単射であることが従う.
+\end{proof}
+
+\begin{defi}{Leray被覆}
+    位相空間 \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) が
+    \[
+        \begin{tabular}{lr}
+		\(H^1(U_i,\mathscr{F}|U_i) = 0\)& as the 1-st \v{C}ech cohomology group of the sheaf \(\mathscr{F}\)\\
+		&on the topological space \(U_i\) for \(\forall i\in I\)
+        \end{tabular}
+    \]
+    を満たすとき, \(\mathcal{U}\) をLeray被覆という.
+\end{defi}
+
+\begin{prop*}
+    \(\mathcal{U} = \{U_i\}_{i\in I }\) がLeray被覆であるとき, \(\tau_\mathcal{U} \colon H^1(\mathcal{U},\mathscr{F}) \to H^1(X,\mathscr{F})\) は同型写像である.
+\end{prop*}
+\begin{proof}
+    任意の \(\mathcal{U}\) の細分 \(V= \{V_k\}_{k\in K}\) について, \(\tau_\mathcal{U} ^{\mathcal{V},1} \colon H^1(\mathcal{U},\mathscr{F}) \to H^1(\mathcal{V},\mathscr{F})\) が同相写像であれば良い. 実際, 任意に \(\eta \in H^1(X,\mathscr{F})\) を取るとき, ある開被覆 \(\mathcal{W}\) と \(a \in H^1(\mathcal{W},\mathscr{F})\) によって \(\eta = [a]\) と表示される. \(\mathcal{U}^\prime \) を \(\mathcal{U}\) と \(\mathcal{W}\) の細分とするとき, \([a] = \left[ \tau_\mathcal{W}^{\mathcal{U}^\prime,1}(a) \right]\) であり, \(H^1(\mathcal{U},\mathscr{F})\) と \(H^1(\mathcal{U}^\prime ,\mathscr{F})\) は同型であったから, \(\tau_\mathcal{U} ^{\mathcal{U}^\prime,1}(c) = \tau_\mathcal{W}^{\mathcal{U}^\prime,1}(a)\) となる \(c\in H^1(\mathcal{U},\mathscr{F})\) が存在する. \([a] = [c]\) であるから, \(\tau_\mathcal{U}^1(c) = \eta\) となるものが取れた. 従って \(\tau_\mathcal{U}^1\) は全射であり, Proposition \ref{prop:tau is injective} より全単射である. よって \(H^1(\mathcal{U},\mathscr{F})\) は \(H^1(X,\mathscr{F})\) と同型であることが得られる.
+
+    Proposition \ref{prop:tau is injective} より \(\tau_\mathcal{U}^\mathcal{V}\) は単射であったから全射であることを示せば良い. 任意に \(f= (f_{kl})_{k,l\in K}\) を取る. \(\mathcal{V}_i := \{U_i \cap V_k\}_{k\in K}(>\{U_i\})\) とするとき, \(f\in Z^1(\mathcal{V},\mathscr{F})\) より制限することにより \((f_{kl}|U_i \cap V_k \cap V_l)_{k,l\in K} \in Z^1(\mathcal{V}_i,\mathscr{F}|U_i)\) を得る. \(\tau_{\mathcal{V}_i}^1 \colon H^1(\mathcal{V}_i,\mathscr{F}|U_i) \to H^1(U_i,\mathscr{F}|U_i) = 0\) であり, \(\tau_{\mathcal{V}_i}^1\) が単射であったことから \(H^1(\mathcal{V}_i,\mathscr{F}|U_i) = 0\) である. よって \((f_{kl}|U_i \cap V_k \cap V_l)_{k,l\in K} \in B^1(\mathcal{V}_i, \mathscr{F}|U_i)\) であるから, \((g_k(i))_{k\in K} \in C^0(\mathcal{V}_i, \mathscr{F}|U_i)\) で,
+    \[
+        (f_{kl}|U_i \cap V_k \cap V_l)_{k,l\in K} = \partial^0((g_k(i))_{k\in K} ) = (g_l(i) - g_k(i)|U_i\cap V_l \cap V_k)_{k,l\in K}
+    \]
+    となるものが取れる. \(U_i \cap U_j \cap V_k \cap V_l\) 上,
+    \[
+        g_l(i)-g_k(i) = g_l(j)-g_k(j) = f_{kl}|U_i \cap U_j \cap V_k \cap V_l
+    \]
+    であるから, \(U_i \cap U_j \cap V_k \cap V_l\) 上,
+    \[
+        -(g_l(j) - g_l (i)) = -(g_k(j) - g_k(i))
+    \]
+    を得る. \(k,l\in K\) を動かすことにより, 貼り合わせ条件から \(F_{ij} \in \mathscr{F}(U_{i}\cap U_j)\) で, \(F_{ij}|V_k = -(g_k(j) - g_k(i))\) を満たすものが取れる. よって \(F:=(F_{ij})_{i,j\in I}\in C^1(\mathcal{U},\mathscr{F})\) を得る. これが \(1\)-コサイクルであることを見る. \(U_i \cap U_j \cap U_h \cap V_k\) 上,
+    \[
+        F_{ih} + F_{hj} = -(g_k(h)-g_k(i))-(g_k(j)-g_k(h)) = -(g_k(j)-g_k(i)) = F_{ij}
+    \]
+    より, \(V_k\) を動かすことにより \(F_{ij} = F_{ih} + F_{hj} \iff F_{ih} - F_{ij} +F_{hj} = 0\) を満たすから, これは\(1\)-コサイクルである. よって \(F\in Z^1(\mathcal{U},\mathscr{F})\) である. \(\tau_\mathcal{U}^{\mathcal{V},1}(F) = f\) を示す. \(V_k \cap V_l \subset U_{\pi(k)} \cap U_{\pi(l)}\) 上,
+    \begin{equation}
+        f_{kl}-F_{\pi(k)\pi(l)} = g_{l}(\pi(k))-g_{k}(\pi(k))-(g_l (\pi(k)) - g_l(\pi(l))) = g_l(\pi(l)) - g_k(\pi(k)) \label{eq:cocycle condition 3}
+    \end{equation}
+    である. \(U_{\pi(k)} \cap V_k = V_k\) であるから \((g_k(\pi(k)))_{k\in K} \in C^0(\mathcal{V},\mathscr{F})\) であり, 等式(\ref{eq:cocycle condition 3})より,
+    \[
+        f-F = (g_l(\pi(k)) - g_l(\pi(l)))_{k,j\in K} =\partial (g_k(\pi(k)))_{k\in K} \in B^1(\mathcal{V},\mathscr{F})
+    \]
+    を得る. 従って, \(f-\tau_\mathcal{U}^{\mathcal{V},1}(F) = 0\) となり \(\tau_\mathcal{U}^{\mathcal{V},1}\) は全射である.
+\end{proof}
+
+層の準同型 \(\alpha \colon \mathscr{F} \to \mathscr{G}\) は\v{C}ech複体の間の準同型 \(\alpha ^\bullet \colon H^\bullet(X,\mathscr{F}) \to H^\bullet(X,\mathscr{G})\) を誘導することを示していく.
+
+\begin{prop*}
+    \(\alpha\colon \mathscr{F} \to \mathscr{G}\) を層の間の準同型とし, \(\mathcal{U}\) を開被覆とする. このとき,
+    \[
+        \alpha_\mathcal{U}^q \colon H^q(\mathcal{U},\mathscr{F}) \to H^q(\mathcal{V},\mathscr{G});[(f_{i_0 \cdots i_q})] \mapsto [\alpha(f_{i_0 \cdots i_q})]
+    \]
+    がwell-definedに定まる.
+\end{prop*}
+\begin{proof}
+    \(\alpha^q_\mathcal{U} \colon C^q(\mathcal{U},\mathscr{F}) \to C^q(\mathcal{U},\mathscr{G})\) を \(\alpha^q(f_{i_0 \cdots i_q}) = (\alpha(f_{i_0 \cdots i_q}))\) と定める. このとき, 次の図式が可換となる:
+    \[\begin{tikzcd}
+        {C^q(\mathcal{U},\mathscr{F})} & {C^{q+1}(\mathcal{U},\mathscr{F})} \\
+        {C^q(\mathcal{U},\mathscr{G})} & {C^{q+1}(\mathcal{U},\mathscr{G})}
+        \arrow["{\partial^q}", from=1-1, to=1-2]
+        \arrow["{\partial^q}", from=2-1, to=2-2]
+        \arrow["{\alpha^q_\mathcal{U}}"', from=1-1, to=2-1]
+        \arrow["{\alpha^{q+1}_\mathcal{U}}", from=1-2, to=2-2]
+    \end{tikzcd}\]
+    従って, \(f\in Z^q(\mathcal{U},\mathscr{F})\) なら,
+    \begin{align*}
+        \partial^q(\alpha_\mathcal{U}^q(f))
+        &= \alpha_\mathcal{U}^{q+1}(\partial^q(f))\\
+        &= \alpha_\mathcal{U}^{q+1}(0) = 0
+    \end{align*}
+    より
+    \[
+        \alpha_\mathcal{U}^q(Z^q(\mathcal{U},\mathscr{F})) \subset Z^q(\mathcal{U},\mathscr{G})
+    \]
+    を得る. 同様に,
+    \[
+        \alpha_\mathcal{U}^q(B^q(\mathcal{U},\mathscr{F})) \subset B^q(\mathcal{U},\mathscr{G})
+    \]
+    を得る. 従って次の写像が誘導される:
+    \[
+        H(\alpha^q_\mathcal{U}) \colon H^q(\mathcal{U},\mathscr{F}) \to H^q(\mathcal{U},\mathscr{G});[(f_{i_0 \cdots i_q})] \mapsto [(\alpha(f_{i_0 \cdots i_q}))]
+    \]
+    次に, 写像
+    \[
+        \alpha^q \colon H^q(X,\mathscr{F}) \to H^q(X,\mathscr{G});[[(f_{i_0 \cdots i_q})]] \mapsto [[(\alpha(f_{i_0 \cdots i_q}))]]
+    \]
+    がwell-definedであることを示す. \(\mathcal{V}\) を \(\mathcal{U}\) の細分とする. このとき次の図式が可換である:
+    \[\begin{tikzcd}
+        {H^q(\mathcal{U},\mathscr{F})} & {H^q(\mathcal{V},\mathscr{F})} \\
+        {H^q(\mathcal{U},\mathscr{G})} & {H^q(\mathcal{V},\mathscr{G})}
+        \arrow["{\tau_\mathcal{U}^{\mathcal{V},q}}", from=1-1, to=1-2]
+        \arrow["{\tau_\mathcal{U}^{\mathcal{V},q}}", from=2-1, to=2-2]
+        \arrow["{H(\alpha_\mathcal{U}^q)}"', from=1-1, to=2-1]
+        \arrow["{H(\alpha_\mathcal{V}^q)}", from=1-2, to=2-2]
+    \end{tikzcd}\]
+    このことより \(\alpha^q\) がwell-definedであることが従う. \(\eta_1 = \eta_2 \in H^q(X,\mathscr{F})\) なら, \(f_i = (f^i_{i_0 \cdots i_q})\in H^q(\mathcal{U}_i,\mathscr{F})\), \(\eta_i = [f_i]\) \((i = 1,2)\) で, \(\mathcal{U}_1,\mathcal{U}_2\) の細分 \(\mathcal{W}\) が存在して \(\tau_{\mathcal{U}_1}^{\mathcal{W},q}(f_1) = \tau_{\mathcal{U}_2}^{\mathcal{W},q}(f_2)\) が成立する. よって,
+    \begin{align*}
+        \tau_{\mathcal{U}_1}^{\mathcal{W},q}(H(\alpha_{\mathcal{U}_1}^q)(f_1))
+        &= H(\alpha_\mathcal{W}^q) (\tau_{\mathcal{U}_1}^{\mathcal{W},q}(f_1))\\
+        &= H(\alpha_\mathcal{W}^q) (\tau_{\mathcal{U}_2}^{\mathcal{W},q}(f_2))\\
+        &= \tau_{\mathcal{U}_2}^{\mathcal{W},q}(H(\alpha_{\mathcal{U}_2}^q)(f_2))
+    \end{align*}
+    であるから,
+    \begin{align*}
+        \alpha^q(\eta_1) = [[(\alpha(f^1_{i_0\cdots i_q}))]]
+        &= [H(\alpha_{\mathcal{U}_1}^q)(f_1)]\\
+        &= [H(\alpha_{\mathcal{U}_2}^q)(f_2)]\\
+        &= [[(\alpha(f^2_{i_0\cdots i_q}))]] = \alpha^q(\eta_2)
+    \end{align*}
+    が成立. 従って \(\alpha^q\) はwell-definedであるから準同型
+    \[
+        \alpha ^\bullet \colon H^\bullet(X,\mathscr{F}) \to H^\bullet(X,\mathscr{G})
+    \]
+    を得る.
+\end{proof}
+
+\begin{defi*}
+    上で得られるような準同型を層の準同型写像 \(\alpha\) が誘導するコホモロジー群の準同型写像という.
+\end{defi*}
+
+\begin{rem} \label{rem:characterization of the kernel}
+    適当に開被覆 \(\mathcal{U}\) を取り, \(\eta =[f] = [[(f_{i_0\cdots i_q})]],\ (f_{i_0\cdots i_q})\in H(\mathcal{U},\mathscr{F})\) と代表元表示するとき,
+    \begin{align*}
+        \alpha^q(\eta) 
+        &= [H(\alpha_\mathcal{U}^q)([(f_{i_0\cdots i_q})_{i_0,\ldots, i_q \in I}])]\\
+        &= [[\alpha_\mathcal{U}^q (f_{i_0\cdots i_q})_{i_0,\ldots, i_q \in I}]]\\
+        &= [[(\alpha (f_{i_0\cdots i_q}))_{i_0,\ldots, i_q \in I}]] 
+    \end{align*}
+    である. \(q=1\) とする. \(\alpha^1(\eta) = 0\) であるとは, ある \(\mathcal{U}\) の細分 \(\mathcal{V}\) が存在して, \(\tau_\mathcal{U}^\mathcal{V} (H(\alpha_\mathcal{U}^1)(f)) = 0\) であることと同値であり, \(\pi \colon K \to I\) を細分写像とするとき,
+    \begin{align*}
+        0&=\tau_\mathcal{U}^\mathcal{V} (H(\alpha_\mathcal{U}^1)(f))\\
+        &= [(\alpha(f_{\pi(k)\pi(l) | V_k \cap V_l})_{k,l \in K})]
+    \end{align*}
+    より, \(\alpha^1(\eta) = 0\) であることと, \((\alpha(f_{\pi(k)\pi(l) | V_k \cap V_l})_{k,l \in K}) \in \Im \partial^{0,\mathcal{V}}\) であることは同値である. 即ち, 開被覆を適当な開被覆 \(\mathcal{W}\) に取り替えることにより, \(\eta = [g] = [[(g_{s,t})_{s,t \in J}]]\) と表示するとき,
+    \[
+        \alpha^1(\eta) = 0 \iff (\alpha(g_{s,t}))_{s,t\in J} \in \Im \partial^{0, \mathcal{W}}
+    \]
+    となる. 一般の次数においても同様の議論ができる.
+\end{rem}
+
+\begin{prop*}
+    層の短完全列
+    \[
+        0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H} \to 0
+    \]
+    が与えられたとき, 次の完全系列が誘導される:
+    \begin{align}
+        0 \to H^0(X,\mathscr{F}) \xrightarrow{\alpha^0} H^0(X,\mathscr{G}) \xrightarrow{\beta^0} H^0(X,\mathscr{H}) \label{seq:exact sequence of 0th cohomology}\\
+        H^1(X,\mathscr{F}) \xrightarrow{\alpha^1} H^1(X,\mathscr{G}) \xrightarrow{\beta^1} H^1(X,\mathscr{H}) \label{seq:exact sequence of 1st cohomology}
+    \end{align}
+\end{prop*}
+\begin{proof}
+    (\ref{seq:exact sequence of 0th cohomology})は, 同型 \(\mathscr{F}(X) \simeq H^0(X,\mathscr{F})\) から従うから, (\ref{seq:exact sequence of 1st cohomology})のみ示せばよい.
+    \begin{itemize}
+        \item \(\Im \alpha^1 \subset \ker \beta^1\) を示す.
+
+            \(\eta \in \Im \alpha^1\) なら, 開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) と \((f_{ij})_{i,j\in I} \in C^1(\mathcal{U},\mathscr{F})\) によって
+            \[
+                \eta = \alpha^1 ([(f_{ij})_{i,j\in I}]) = [[(\alpha(f_{ij}))_{i,j\in I}]]
+            \] 
+            と表示することができる. このとき, \(\beta(U_{ij}) \circ \alpha(U_{ij}) = 0\) より,
+            \begin{align*}
+                \beta^1(\eta)
+                &= (\beta^1 \circ \alpha^1) (([(f_{ij})_{i,j\in I}]))\\
+                &= [[(\beta \circ \alpha) (f_{ij})_{i,j \in I}]]\\
+                &= 0
+            \end{align*}
+            である. 従って \(\eta \in \ker \beta^1\) である.
+        \item \(\Im \alpha^1 \supset \ker \beta^1\) を示す.
+        
+            \(g \in \ker \beta^1\) なら, 開被覆 \(\mathcal{U}\) を取り, \((g_{ij})_{i,j \in I} \in C^1(X,\mathscr{G})\) によって
+            \[
+                g = [[(g_{ij})_{i,j \in I}]]
+            \]
+            と表示する. このとき, Remark \ref{rem:characterization of the kernel}より, \(\beta(g) = 0\) であるから
+            \[
+                (\beta(g_{ij}))_{i,j \in I} \in \Im \partial^{0,\mathcal{U}} = B^1(\mathcal{U},\mathscr{H})
+            \]
+            を仮定してよい. よって \((h_i)_{i\in I} \in C^0(\mathcal{U},\mathscr{H})\) で
+            \[
+                (\beta(g_{ij}))_{i,j \in I} = \partial (h_i)_{i\in I} = (h_j - h_i)_{i,j\in I}
+            \]
+            となるものが取れる. 各 \(P\in X\) に対して, \(i(P) \in I\) を, \(P \in U_{i(P)}\) となるように取ってくる. このとき, \(\beta_P \colon \mathscr{G}_P \to \mathscr{H}_P\) は全射であったから, \(\beta_P(g_P) = (h_{i(P)})_P\) となる \(g_P \in \mathscr{G}_P\) が取れる. Stalkの定義より, \(g \in \mathscr{H}(U)\), \(h_{i(P)} \in \mathscr{H}(U_{i(P)})\) となる開集合 \(U\) と \(V_P \subset U_{i(P)}\) を取るとき,
+            \[
+                \beta(g|V_P) = \beta(g)|V_P = h_{i(P)}|V_P
+            \]
+            を満たす. \(g^P = g|V_p \in \mathscr{H}(V_p)\) とすれば,
+            \[
+                \beta(g^P) = h_{i(P)}|V_P
+            \]
+            を満たすようなものが構成できた. こうして構成される \(\mathcal{U}\) の細分を \(\mathcal{V} = \{V_P\}_{P\in X}\) とする. \(i\colon X \to I\) は細分写像となっている. \(g^{PQ} = g_{i(P)i(Q)}|V_P\cap V_Q\) とおく. このとき,
+            \[
+                [[(g^{PQ})_{P,Q\in X}]] = [\tau_{\mathcal{U}}^{\mathcal{V}}((g_{ij})_{i,j\in I})] = [[(g_{ij})_{i,j\in I}]] =g
+            \]
+            である. \(\mathcal{V}\) を \(\mathcal{U}\) と置きなおすと, \(g = [[(g^{PQ})_{P,Q\in X}]]\), \(\beta(g_{i(P)i(Q)}) = h_{i(Q)} - h_{i(P)}|V(P) \cap V(Q) = \beta(g^Q)-\beta(g^P)\) は, \(g=[[(g_{ij})_{i,j \in I}]]\), \(\beta(g_{ij}) = \beta(g_j)-\beta(g_i)\) と書ける. \(U_{ij}\) 上, 
+            \[
+                \beta(g_{ij}-g_j +g_i) = 0
+            \]
+            より, \(\beta_{ij}-g_j + g_i \in \ker \beta(U_{ij}) = \Im \alpha(U_{ij})\) であるから,
+            \[
+                \alpha(f_{ij}) = g_{ij}-g_j + g_i
+            \]
+            となる \(f_{ij} \in \mathscr{F}(U_{ij})\) が取れる. このとき,
+            \begin{align*}
+                \alpha(f_{jk} -f_{ik} + f_{ij})
+                &= \alpha(f_{jk}) -\alpha(f_{ik}) + \alpha(f_{ij})\\
+                &= g_{jk}-g_k + g_j -(g_{ik}-g_k + g_i) +g_{ij}-g_j + g_i\\
+                &= g_{jk} - g_{ik} +g_{ij} = 0
+            \end{align*}
+            であり, \(\alpha\) は単射であったから,
+            \[
+                f_{jk} -f_{ik} + f_{ij} = 0
+            \]
+            となり \(f := (f_{ij})_{i,j\in I}\in C^0(\mathcal{U},\mathscr{F})\) は \(1\)-コサイクルである.
+            \[
+                \alpha(f) - g = \partial(g_i)_{i\in I}
+            \]
+            より,
+            \[
+                \alpha^1 ([[f]]) = [[\alpha(f)]] = g
+            \]
+            となり \(g\in \Im \alpha^1\) が示された.
+    \end{itemize}    
+\end{proof}
+    
+\end{document}
