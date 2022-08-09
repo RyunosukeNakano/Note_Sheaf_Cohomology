@@ -23,7 +23,7 @@
 \newenvironment{rem}{\refstepcounter{theorem}\begin{flushleft} \underline{Remark \arabic{theorem}.} \end{flushleft}\vspace{-1zh}\ }{}
 \newenvironment{note}{\begin{flushleft} \underline{Notation.} \end{flushleft}\vspace{-1zh}\ }{}
 \newenvironment{eg}[1]{\refstepcounter{theorem}\begin{flushleft} \underline{Exempli gratia \arabic{theorem}. ({#1})} \end{flushleft}\vspace{-1zh}\ }{}
-\renewenvironment{proof}{\begin{flushleft} \underline{Proof.} \end{flushleft}\vspace{-1zh}\ }{\qed}
+\renewenvironment{proof}{\begin{flushleft} \underline{Proof.} \end{flushleft}\vspace{-1zh}\ }{\qed\\}
 
 
 
@@ -35,6 +35,7 @@
 \newcommand{\Res}[2]{{{\rm Res}\left( {#1},{#2} \right)}}
 \renewcommand{\emptyset}{\varnothing}
 \newcommand{\id}{\textrm{id}}
+\renewcommand{\ker}{\textrm{Ker }}
 
 
 \theoremstyle{definition}
@@ -613,5 +614,69 @@
             となり \(g\in \Im \alpha^1\) が示された.
     \end{itemize}    
 \end{proof}
-    
+
+次に, 与えられた層の短完全列 \(0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H}\to 0\) に対して, \(H^0(X,\mathscr{H})\) と \(H^1(X,\mathscr{F})\) の間に連結準同型と呼ばれる準同型を構成し完全列 \(0 \to H^0(X,\mathscr{F}) \to H^0(X,\mathscr{G}) \to H^0(X,\mathscr{H}) \to H^1(X,\mathscr{F}) \to H^1(X,\mathscr{G}) \to H^1(X,\mathscr{H})\) を構成する:
+
+\(h\in H^0(X,\mathscr{H})\) を取る. 各点 \(P\in X\) に対し, \(\beta_P \colon \mathscr{G}_P \to \mathscr{H}_P\) は全射であったから, \(h_P \in \mathscr{H}_P\) に対して,
+\[
+    \beta_P(g_P) = h_P
+\]
+となる \(g_P \in \mathscr{G}_P\) が取れた. stalkの定義から, 点 \(P\) の開近傍 \(U_P\) と \(g^P \in \mathscr{H}(U_P)\) が存在して,
+\[
+    \beta(g^P) = h|U_P
+\]
+となる. \(P \in X\) を動かすことにより,
+\[
+    \beta(g_i) = h|U_i
+\]
+を満たすような \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) と \(0\)-コチェイン \((g_i)_{i \in I} \in C^0 (\mathcal{U},\mathscr{G})\) ができた. \(U_{ij}\) 上,
+\begin{align*}
+    \beta(g_i - g_j) 
+    &= \beta(g_i) - \beta(g_j)\\
+    &= h - h = 0
+\end{align*}
+より \(g_i - g_j \in \ker \beta(U_{ij}) = \Im \alpha(U_{ij})\) であるから,
+\[
+    \alpha(f_{ij}) = g_i - g_j |U_{ij}
+\]
+を満たす \(f_{ij} \in \mathscr{F}(U_{ij})\) が取れる. よって \(1\)-コチェイン \((f_{ij})_{i,j \in I}\) ができた. これは \(1\)-コサイクルである. 実際, \(U_{ijk}\) 上,
+\[
+    \alpha(f_{jk} - f_{ik} + f_{ij}) = (g_j -g_k) - (g_i -g_k) + (g_i -g_j) = 0
+\]
+であり, \(\alpha\) の単射性から \(f_{jk} - f_{ik} + f_{ij} = 0\) を満たす. 従って, \((f_{ij})_{i,j \in I} \in Z^1(\mathcal{U},\mathscr{F})\) である. \(f_\mathcal{U} = [(f_{ij})_{i,j \in I}] \in H^1(\mathcal{U}, \mathscr{F})\) で定める. また, \(f = \tau_\mathcal{U}(f)\in H^1(X, \mathscr{F})\) と定め, \(\delta^0(h) = f\) と定める. これは \(\mathcal{U}\) の取り方などには依存せずに定まるから, 準同型 \(\delta^0 \colon H^0(X,\mathscr{H}) \to H^1(X,\mathscr{F})\) が定まる.
+\begin{defi}{連結準同型}
+    上で構成した準同型 \(\delta^0 \colon H^0(X,\mathscr{H}) \to H^1(X,\mathscr{F})\) を連結準同型(connecting homomorphism)という.
+\end{defi}
+
+\begin{theorem*}
+    \(X\) を位相空間, \(0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H}\to 0\) を \(X\) 上の層の短完全列とする. このとき, 次は完全系列である:
+    \[
+        0 \to H^0(X,\mathscr{F}) \xrightarrow{\alpha^0} H^0(X,\mathscr{G}) \xrightarrow{\beta^0} H^0(X,\mathscr{H}) \xrightarrow{\delta^0} H^1(X,\mathscr{F}) \xrightarrow{\alpha^1} H^1(X,\mathscr{G}) \xrightarrow{\beta^1} H^1(X,\mathscr{H})
+    \] 
+\end{theorem*}
+\begin{proof}
+    \(\Im \beta^0 = \ker \delta^0\) と \(\Im \delta^0 = \ker \alpha^1\) を示せば良い.
+    \begin{itemize}
+        \item \(\Im \beta^0 = \ker \delta^0\)
+        
+        hoge
+        \item \(\Im \delta^0 = \ker \alpha^1\)
+
+        huga
+    \end{itemize}
+\end{proof}
+
+\begin{rem}
+    \(X\) がパラコンパクト多様体であるとき, 同様の方法で連結準同型 \(\delta^n \colon H^n(X,\mathscr{H}) \to H^{n+1}(X,\mathscr{F})\) が定まり,
+    \begin{align*}
+        &0 \to H^0(X,\mathscr{F}) \xrightarrow{\alpha^0} H^0(X,\mathscr{G}) \xrightarrow{\beta^0} H^0(X,\mathscr{H})\\
+        &\xrightarrow{\delta^0} H^1(X,\mathscr{F}) \xrightarrow{\alpha^1} H^1(X,\mathscr{G}) \xrightarrow{\beta^1} H^1(X,\mathscr{H})\\
+        &\cdots\\
+        &\xrightarrow{\delta^{q-1}} H^{q}(X,\mathscr{F}) \xrightarrow{\alpha^q} H^{q}(X,\mathscr{G}) \xrightarrow{\beta^{q}} H^{q}(X,\mathscr{H})\\
+        &\xrightarrow{\delta^{q}} H^{q+1}(X,\mathscr{F}) \xrightarrow{\alpha^{q+1}} H^{q+1}(X,\mathscr{G}) \xrightarrow{\beta^{q+1}} H^{q+1}(X,\mathscr{H})\\
+        &\cdots
+    \end{align*}
+    は完全系列となる.
+\end{rem}
+
 \end{document}
