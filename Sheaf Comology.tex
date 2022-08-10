@@ -1,6 +1,5 @@
 \documentclass[a4paper,10pt,dvipdfmx]{jsreport}
 
-
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \usetikzlibrary{intersections, calc, arrows}
@@ -523,7 +522,7 @@
         0&=\tau_\mathcal{U}^\mathcal{V} (H(\alpha_\mathcal{U}^1)(f))\\
         &= [(\alpha(f_{\pi(k)\pi(l) | V_k \cap V_l})_{k,l \in K})]
     \end{align*}
-    より, \(\alpha^1(\eta) = 0\) であることと, \((\alpha(f_{\pi(k)\pi(l) | V_k \cap V_l})_{k,l \in K}) \in \Im \partial^{0,\mathcal{V}}\) であることは同値である. 即ち, 開被覆を適当な開被覆 \(\mathcal{W}\) に取り替えることにより, \(\eta = [g] = [[(g_{s,t})_{s,t \in J}]]\) と表示するとき,
+    より, \(\alpha^1(\eta) = 0\) であることと, \((\alpha(f_{\pi(k)\pi(l) | V_k \cap V_l}))_{k,l \in K} \in \Im \partial^{0,\mathcal{V}}\) であることは同値である. 即ち, 開被覆を適当な開被覆 \(\mathcal{W}\) に取り替えることにより, \(\eta = [g] = [[(g_{s,t})_{s,t \in J}]]\) と表示するとき,
     \[
         \alpha^1(\eta) = 0 \iff (\alpha(g_{s,t}))_{s,t\in J} \in \Im \partial^{0, \mathcal{W}}
     \]
@@ -626,9 +625,9 @@
     \beta(g^P) = h|U_P
 \]
 となる. \(P \in X\) を動かすことにより,
-\[
-    \beta(g_i) = h|U_i
-\]
+\begin{equation}
+    \beta(g_i) = h|U_i \label{eq:construction of connecting homomorphism 1}
+\end{equation}
 を満たすような \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) と \(0\)-コチェイン \((g_i)_{i \in I} \in C^0 (\mathcal{U},\mathscr{G})\) ができた. \(U_{ij}\) 上,
 \begin{align*}
     \beta(g_i - g_j) 
@@ -636,17 +635,22 @@
     &= h - h = 0
 \end{align*}
 より \(g_i - g_j \in \ker \beta(U_{ij}) = \Im \alpha(U_{ij})\) であるから,
-\[
-    \alpha(f_{ij}) = g_i - g_j |U_{ij}
-\]
+\begin{equation}
+    \alpha(f_{ij}) = g_i - g_j |U_{ij} \label{eq:construction of connecting homomorphism 2}
+\end{equation}
 を満たす \(f_{ij} \in \mathscr{F}(U_{ij})\) が取れる. よって \(1\)-コチェイン \((f_{ij})_{i,j \in I}\) ができた. これは \(1\)-コサイクルである. 実際, \(U_{ijk}\) 上,
 \[
     \alpha(f_{jk} - f_{ik} + f_{ij}) = (g_j -g_k) - (g_i -g_k) + (g_i -g_j) = 0
 \]
 であり, \(\alpha\) の単射性から \(f_{jk} - f_{ik} + f_{ij} = 0\) を満たす. 従って, \((f_{ij})_{i,j \in I} \in Z^1(\mathcal{U},\mathscr{F})\) である. \(f_\mathcal{U} = [(f_{ij})_{i,j \in I}] \in H^1(\mathcal{U}, \mathscr{F})\) で定める. また, \(f = \tau_\mathcal{U}(f)\in H^1(X, \mathscr{F})\) と定め, \(\delta^0(h) = f\) と定める. これは \(\mathcal{U}\) の取り方などには依存せずに定まるから, 準同型 \(\delta^0 \colon H^0(X,\mathscr{H}) \to H^1(X,\mathscr{F})\) が定まる.
+
 \begin{defi}{連結準同型}
     上で構成した準同型 \(\delta^0 \colon H^0(X,\mathscr{H}) \to H^1(X,\mathscr{F})\) を連結準同型(connecting homomorphism)という.
 \end{defi}
+
+\begin{rem}
+    \(\delta^0(h)\) を見るには式(\ref{eq:construction of connecting homomorphism 1})を満たすような開被覆 \(\mathcal{U}\) と \(0\)-コチェイン \((g_i)_{i\in I} \in C^0(\mathcal{U},\mathscr{G})\) を作り, \(\alpha\) の単射性から唯一である \(1\)-コサイクル \((f_{ij})_{i,j \in I} \in Z^1(\mathcal{U}, \mathscr{F})\) を見ればよい.
+\end{rem}
 
 \begin{theorem*}
     \(X\) を位相空間, \(0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H}\to 0\) を \(X\) 上の層の短完全列とする. このとき, 次は完全系列である:
@@ -659,15 +663,78 @@
     \begin{itemize}
         \item \(\Im \beta^0 = \ker \delta^0\)
         
-        hoge
+        \(h\in \Im \beta^0\) なら, \(h = \beta^0 (g)\) となる \(g\in H^0(X,\mathscr{G}) = \mathscr{G}(X)\) が取れる. \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) を取るとき,
+        \[
+            h|U_i = \beta(g)|U_i = \beta(g|U_i)
+        \]
+        を満たす. \(g_i = g|U_i\) とおけば,
+        \[
+            h|U_i = \beta(g_i)
+        \]
+        である. \(\delta^0\) の構成に従い
+        \[
+            \alpha(f_{ij}) = g_i - g_j|U_{ij}
+        \]
+        となる \(f_{ij} \in \mathscr{F}(U_{ij})\) を取るが,
+        \[
+            g_i - g_j = g - g = 0
+        \]
+        より, \(\alpha\) の単射性から \(f_{ij} = 0\) である. 従って, \(\delta^0(h) = 0\) となり \(h \in \ker \delta^0\) である.
+
+        \(h \in \ker \delta^0\) なら, stalkの全射性から式(\ref{eq:construction of connecting homomorphism 1})を満たす, すなわち
+        \[
+            \beta(g_i) = h|U_i
+        \]
+        となる開被覆 \(\mathcal{U}\) と \(0\)-コチェイン \((g_i)_{i\in I} \in C^0(\mathcal{U},\mathscr{G})\) が取れる. このとき, \(\delta^0\) の構成に従うと,
+        \[
+            \alpha(f_{ij}) = g_i - g_j
+        \]
+        となる \(1\)-コチェイン \((f_{ij})_{i,j\in I} \in Z^1(\mathcal{U},\mathscr{F})\) が取れる.
+        \[
+            0 = \delta^0(h) = [[(f_{ij})_{i,j \in I}]]
+        \]
+        より, 適当に \(\mathcal{U}\) の細分を取り直すと, \((f_{ij})_{i,j \in I} \in \partial^{0,\mathcal{U}}\) となる. 即ち, \(f_{ij} = f_j - f_i\) となる \((f_i)_{i\in I} \in C^0(\mathcal{U},\mathscr{F})\) が取れる. このとき, \(U_{ij}\) 上,
+        \[
+            \alpha(f_j) - \alpha(f_i) = \alpha(f_{ij}) = g_i - g_j
+        \]
+        より,
+        \[
+            \alpha(f_j) + g_j = \alpha(f_i) + g_i
+        \]
+        であるから, 貼り合わせ条件から \(g\in \mathscr{G}(X)\) で,
+        \[
+            g|U_i = \alpha(f_i) + g_i
+        \]
+        となるものが取れる. \(\beta(U_i) \circ \alpha(U_i) = 0\) より,
+        \[
+            \beta(g)|U_i = \beta(g|U_i) = \beta(g_i) = h|U_i
+        \]
+        であるから, 貼り合わせ条件から \(\beta(g) = h\) となる. 従って \(h\in \Im \beta^0\) となり等号が従う.
         \item \(\Im \delta^0 = \ker \alpha^1\)
 
-        huga
+        \(f \in \Im \delta^0\) とする. このとき, \(f = \delta^0(h)\) となる \(h\in H^0(X,\mathscr{H})\) が取れる. このとき, \(\delta^0\) の構成から, 式(\ref{eq:construction of connecting homomorphism 1}), (\ref{eq:construction of connecting homomorphism 1})を満たす \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\), \(0\)-コチェイン \((g_i)_{i\in I} \in C^0(\mathcal{U},\mathscr{G})\), \(1\)-コチェイン \((f_{ij})_{i,j\in I} \in Z^1(\mathcal{U},\mathscr{F})\) が取れ, \(f = [[(f_{ij})_{i,j\in I}]]\) と表示される. このとき,
+        \begin{align*}
+            \alpha^1(f)
+            &= [[(\alpha(f_{ij}))_{i,j\in I}]]\\
+            &= [[(g_i -g_j)_{i,j\in I}]]\\
+            &= [[\partial^{0,\mathcal{U}} (-(g_i)_{i\in I})]] = 0
+        \end{align*}
+        であるから, \(f\in \ker \alpha^1\) である.
+
+        \(f\in \ker \alpha^1\) とする. Remark \ref{rem:characterization of the kernel}より, 適当な \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) と \(1\)-コチェイン \((f_{ij})_{i,j \in I} \in C^0(\mathcal{U},\mathscr{F})\) によって,
+        \[
+            (\alpha(f_{ij}))_{i,j\in I} \in \Im \partial^{0,\mathcal{U}}
+        \]
+        となる. よって \(\alpha(f_{ij}) = g_j -g_i\) となる \(0\)-コチェイン \((g_i)_{i\in I}\in C^0(\mathcal{U},\mathscr{G})\) が取れる. このとき, \(U_{ij}\) 上, \(0 = \beta\alpha(f_{ij}) = \beta(g_j) - \beta(g_i)\) より, 貼り合わせ条件によって
+        \[
+            h|U_i = -\beta(g_i)
+        \]
+        となる \(h\in \mathscr{H}(X) = H^0(X,\mathscr{H})\) が取れる. このとき, \(h\) の構成を遡るとこれは \(\delta^0(h)\) の構成となっていることから, \(\delta^0(h) = [[(f_{ij})_{i,j\in I}]] = f\) を得る. 
     \end{itemize}
 \end{proof}
 
 \begin{rem}
-    \(X\) がパラコンパクト多様体であるとき, 同様の方法で連結準同型 \(\delta^n \colon H^n(X,\mathscr{H}) \to H^{n+1}(X,\mathscr{F})\) が定まり,
+    \(X\) がパラコンパクト多様体であるとき, 同様の方法で連結準同型 \(\delta^n \colon H^n(X,\mathscr{H}) \to H^{n+1}(X,\mathscr{F})\) が定まり, 次の系列は完全系列となる:
     \begin{align*}
         &0 \to H^0(X,\mathscr{F}) \xrightarrow{\alpha^0} H^0(X,\mathscr{G}) \xrightarrow{\beta^0} H^0(X,\mathscr{H})\\
         &\xrightarrow{\delta^0} H^1(X,\mathscr{F}) \xrightarrow{\alpha^1} H^1(X,\mathscr{G}) \xrightarrow{\beta^1} H^1(X,\mathscr{H})\\
@@ -676,7 +743,6 @@
         &\xrightarrow{\delta^{q}} H^{q+1}(X,\mathscr{F}) \xrightarrow{\alpha^{q+1}} H^{q+1}(X,\mathscr{G}) \xrightarrow{\beta^{q+1}} H^{q+1}(X,\mathscr{H})\\
         &\cdots
     \end{align*}
-    は完全系列となる.
 \end{rem}
 
 \end{document}
