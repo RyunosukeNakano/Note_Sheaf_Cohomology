@@ -1,5 +1,9 @@
 \documentclass[a4paper,10pt,dvipdfmx]{jsreport}
 
+\usepackage[dvipdfmx]{hyperref}
+\hypersetup{%
+    colorlinks = true
+}
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \usetikzlibrary{intersections, calc, arrows}
@@ -13,11 +17,11 @@
 
 \newenvironment{theorem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 \newenvironment{theorem*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{defi}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{theorem}. ({#1}})}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{defi}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 \newenvironment{defi*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{lem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{theorem}. ({#1}})}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{lem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 \newenvironment{lem*}[1]{\refstepcounter{theorem}\label{#1}\begin{itembox}[l]{\underline{Lemma \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{prop}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{theorem}. ({#1}})}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{prop}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 \newenvironment{prop*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{theorem}. }}\vspace{-0.5zh}\ }{\end{itembox}}
 \newenvironment{rem}{\refstepcounter{theorem}\begin{flushleft} \underline{Remark \arabic{theorem}.} \end{flushleft}\vspace{-1zh}\ }{}
 \newenvironment{note}{\begin{flushleft} \underline{Notation.} \end{flushleft}\vspace{-1zh}\ }{}
@@ -712,7 +716,7 @@
         であるから, 貼り合わせ条件から \(\beta(g) = h\) となる. 従って \(h\in \Im \beta^0\) となり等号が従う.
         \item \(\Im \delta^0 = \ker \alpha^1\)
 
-        \(f \in \Im \delta^0\) とする. このとき, \(f = \delta^0(h)\) となる \(h\in H^0(X,\mathscr{H})\) が取れる. このとき, \(\delta^0\) の構成から, 式(\ref{eq:construction of connecting homomorphism 1}), (\ref{eq:construction of connecting homomorphism 1})を満たす \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\), \(0\)-コチェイン \((g_i)_{i\in I} \in C^0(\mathcal{U},\mathscr{G})\), \(1\)-コチェイン \((f_{ij})_{i,j\in I} \in Z^1(\mathcal{U},\mathscr{F})\) が取れ, \(f = [[(f_{ij})_{i,j\in I}]]\) と表示される. このとき,
+        \(f \in \Im \delta^0\) とする. このとき, \(f = \delta^0(h)\) となる \(h\in H^0(X,\mathscr{H})\) が取れる. このとき, \(\delta^0\) の構成から, 式(\ref{eq:construction of connecting homomorphism 1}), (\ref{eq:construction of connecting homomorphism 2})を満たす \(X\) の開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\), \(0\)-コチェイン \((g_i)_{i\in I} \in C^0(\mathcal{U},\mathscr{G})\), \(1\)-コチェイン \((f_{ij})_{i,j\in I} \in Z^1(\mathcal{U},\mathscr{F})\) が取れ, \(f = [[(f_{ij})_{i,j\in I}]]\) と表示される. このとき,
         \begin{align*}
             \alpha^1(f)
             &= [[(\alpha(f_{ij}))_{i,j\in I}]]\\
