@@ -818,12 +818,14 @@
     層の間の同型 \(\mathscr{F} \simeq \mathscr{G}\) が与えられたとき, この同型は\v{C}echコホモロジー群の間の同型 \(H^q(X,\mathscr{F}) \simeq H^q(X,\mathscr{G})\) を誘導する.
 \end{theorem*}
 
+\chapter{三大定理}
+
 \begin{defi*}
     \(X\) を閉Riemann面, \(U\) を開集合とするとき, \(\mathcal{M}_X(U)\) を \(U\) 上の有理型関数全体, \(\mathcal{O}_X(U)\) を \(U\) 上の正則関数全体の成す \(\mathbb{C}\) 代数し, \(\Omega_X(U)\) を \(U\) 上の正則微分全体の成す \(\mathbb{C}\) 代数とする. このとき, 因子 \(D \in \textrm{Div}(X)\) と開集合 \(U\) に対し,
     \begin{align*}
         \mathcal{O}_X(D)(U) &:= \{f\in \mathcal{M}(U) \mid \div(f) + D|_U \geq 0\}\\
         \mathcal{L}_X(D) &:= \mathcal{O}_X(D)(X)\\
-        \Omega_X(D)(U) &:= \{\omega \in \Omega_X(U) \mid \div(\omega) \geq D|_U\}\\
+        \Omega_X(D)(U) &:= \{\omega \in \Omega_X(U) \mid \div(\omega) + D|_U \geq 0\}\\
         \mathfrak{J}_X(D) &:= \Omega_X(D)(X)
     \end{align*}
     と定める. これにより \(\mathcal{O}_X\) 代数の層 \(\mathcal{O}_X(D)\), \(\Omega_X(D)\) を定める. また,
@@ -833,11 +835,41 @@
     \end{align*}
     と定める.
 \end{defi*}
-\(\mathcal{O}_X(K_X - D) \simeq \Omega_X(D)\) であった. Riemann-Rochの定理を次の形で与える:
-\[
-    h^0(\mathcal{O}_X(D)) - h^1(\mathcal{O}_X(D)) = 1 - g + \deg D
-\]
-また, Serre双対性
+
+次の3つの定理を将来的に示す:
+\begin{theorem}{Riemann-Rochの定理}
+    因子 \(D\in \textrm{Div}(X)\) について次が成立:
+    \[
+        h^0(\mathcal{O}_X(D)) - h^1(\mathcal{O}_X(D)) = 1 - g + \deg D
+    \]
+\end{theorem}
+\begin{theorem}{Serre双対性}
+    留数写像
+    \[
+        \textrm{res}\colon H^1(X,\Omega_X^1) \to \mathbb{C};\alpha \mapsto \frac{1}{2\pi \sqrt{-1}} \iint _X \beta,\ \delta^0(\beta)=\alpha
+    \]
+    とカップ積
+    \[
+        \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \to H^1(X,\Omega_X^1);\ (\alpha,[[(\beta_{ij})_{i,j}]]) \mapsto \textrm{res} ([[(\alpha \beta_{ij})_{i,j}]])
+    \]
+    の合成
+    \[
+        \left\langle \ast, \ast\ast \right\rangle = \textrm{res} \circ \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \mapsto \mathbb{C};(\alpha,[[(\beta_{ij})_{i,j}]]) \mapsto \textrm{res}([[(\alpha \beta_{ij})_{i,j}]])
+    \]
+    は非退化な双一次形式である. 特に次の等式が成り立つ:
+    \[
+        h^0 (\mathcal{O}_X(K_X-D)) = h^0(\Omega_X^1(-D)) = h^1(\mathcal{O}_X(D))
+    \]
+\end{theorem}
+
+\begin{theorem}{消滅定理}
+    \(X\) 上の因子 \(D,C\in \textrm{Div}(X)\) について次が成立:
+    \begin{enumerate}
+        \item \(\deg E <  \Rightarrow h^0(\mathcal{O}_X(E))=0\)
+        \item \(\deg D \geq 2g-1(=\deg K_X +1) \Rightarrow h^1(\mathcal{O}_X(D)) = 0\)
+    \end{enumerate}
+\end{theorem}
+\(\mathcal{O}_X(K_X - D) \simeq \Omega_X(D)\) であった. また, Serre双対性
 \[
     h^1(\mathcal{O}_X(D)) = h^0(\mathcal{O}_X(K_X-D))
 \]
