@@ -15,21 +15,34 @@
 
 
 
-\newenvironment{theorem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{theorem*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{defi}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{defi*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{lem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{lem*}[1]{\refstepcounter{theorem}\label{#1}\begin{itembox}[l]{\underline{Lemma \arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{prop}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{prop*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{theorem}. }}\vspace{-0.5zh}\ }{\end{itembox}}
-\newenvironment{rem}{\refstepcounter{theorem}\begin{flushleft} \underline{Remark \arabic{theorem}.} \end{flushleft}\vspace{-1zh}\ }{}
+\newenvironment{theorem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{theorem*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{chapter}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{defi}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{defi*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{chapter}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{lem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{lem*}[1]{\refstepcounter{theorem}\label{#1}\begin{itembox}[l]{\underline{Lemma \arabic{chapter}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{prop}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{prop*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{chapter}.\arabic{theorem}. }}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{rem}{\refstepcounter{theorem}\begin{flushleft} \underline{Remark \arabic{chapter}.\arabic{theorem}.} \end{flushleft}\vspace{-1zh}\ }{}
+
 \newenvironment{note}{\begin{flushleft} \underline{Notation.} \end{flushleft}\vspace{-1zh}\ }{}
-\newenvironment{eg}[1]{\refstepcounter{theorem}\begin{flushleft} \underline{Exempli gratia \arabic{theorem}. ({#1})} \end{flushleft}\vspace{-1zh}\ }{}
+
+\newenvironment{eg}[1]{\refstepcounter{theorem}\begin{flushleft} \underline{Exempli gratia \arabic{chapter}.\arabic{theorem}. ({#1})} \end{flushleft}\vspace{-1zh}\ }{}
+
 \renewenvironment{proof}{\begin{flushleft} \underline{Proof.} \end{flushleft}\vspace{-1zh}\ }{\qed\\}
 
 
-
+\newcounter{theorem}[chapter]
+\setcounter{theorem}{0}
+\renewcommand{\thetheorem}{\arabic{chapter}.\arabic{theorem}}
 \newcommand{\st}{{\rm\ s.t.\ }}
 \newcommand{\openset}{\underset{{\rm open}}{\subset}}
 \newcommand{\closedset}{\underset{{\rm closed}}{\subset}}
@@ -72,13 +85,22 @@
 \setlength{\evensidemargin}{-9.4truemm} %
 \addtolength{\textwidth}{-41truemm}     % 右の余白も25mm（RIGHT=-LEFT）
 
-\newcounter{theorem}[section]
-\setcounter{theorem}{0}
 \begin{document}
 \title{層係数コホモロジーの理論}
 \author{@Big\_ToiletPaper}
 \maketitle
 これは小木曽啓示『代数曲線論』の5章を読み勉強した内容をノートにしたものである.
+
+\chapter{層係数コホモロジー}
+層に関する性質は既知のものとする. 例えば, 層の短完全列
+\[
+    0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H} \to 0
+\]
+は, 開集合 \(U\) について切断の左完全列
+\[
+    0 \to \mathscr{F}(U) \xrightarrow{\alpha(U)} \mathscr{G}(U) \xrightarrow{\beta(U)} \mathscr{H}(U)
+\]
+を誘導する.
 \begin{defi*}
     \(X\) を位相空間, \(\mathcal{U} = \{U_i\}_{i\in I}\) を開被覆とする. このとき, \(\iota = (i_0, i_1, \ldots , i_q) \in I^{q+1}\) に対して,
     \[
