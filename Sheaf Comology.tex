@@ -52,6 +52,7 @@
 \renewcommand{\emptyset}{\varnothing}
 \newcommand{\id}{\textrm{id}}
 \renewcommand{\ker}{\textrm{Ker }}
+\renewcommand{\div}{\textrm{div}}
 
 
 \theoremstyle{definition}
@@ -771,4 +772,77 @@
     \end{align*}
 \end{rem}
 
+層の同型 \(\varphi \colon \mathscr{F} \to \mathscr{G}\) を考えてみる. 即ち, 層の準同型で各切断について, \(\varphi(U) \colon \mathscr{F}(U) \to \mathscr{G}(U)\) が同型写像であるときを考える. 開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) を与えたとき, \v{C}ech複体に関しては, 同型 \(\mathscr{F}(U_\iota) \simeq \mathscr{G}(U_\iota)\), \(\iota \in I^{q+1}\) によって
+\[
+    \varphi^q_\mathcal{U} \colon C^q(\mathcal{U},\mathscr{F}) \to C^q(\mathcal{U},\mathscr{G})
+\]
+が同型になる. 層の準同型は制限と可換になることから, 次の図式が可換となる:
+\[\begin{tikzcd}
+	{C^q(\mathcal{U},\mathscr{F})} && {C^q(\mathcal{U},\mathscr{G})} \\
+	\\
+	{C^{q+1}(\mathcal{U},\mathscr{F})} && {C^{q+1}(\mathcal{U},\mathscr{G})}
+	\arrow["{\partial^{q}}", from=1-1, to=3-1]
+	\arrow["{\partial^{q}}", from=1-3, to=3-3]
+	\arrow["{\varphi^{q+1}}", from=3-1, to=3-3]
+	\arrow["{\varphi^q}", from=1-1, to=1-3]
+\end{tikzcd}\]
+従って, 次の写像が誘導される:
+\begin{align}
+    & \varphi^q_\mathcal{U} \colon B^q(\mathcal{U},\mathscr{F}) \to B^q(\mathcal{U},\mathscr{G}) \label{map:isomorphism between coboundary groups}\\
+    & \varphi^q_\mathcal{U} \colon Z^q(\mathcal{U},\mathscr{F}) \to Z^q(\mathcal{U},\mathscr{G}) \label{map:isomorphism between cochain groups}
+\end{align}
+これらの群の間に \(\varphi^q\) が同型を与えている. 単射性は元の写像 \(\varphi^q_\mathcal{U} \colon C^q(\mathcal{U},\mathscr{F}) \to C^q(\mathcal{U},\mathscr{G})\) から得られ, 全射性もdiagram chasingにより従う. この写像によって, \(\mathscr{F}\), \(\mathscr{G}\) の \(\mathcal{U}\) に関する\v{C}echコホモロジー群の間の同型写像
+\[
+    H(\varphi^q_\mathcal{U}) \colon H^q(\mathcal{U},\mathscr{F}) \to H^q(\mathcal{U},\mathscr{G})
+\]
+を得る. 次の図式が可換になることから, 順極限の普遍性により同型 \(H^q(X,\mathscr{F}) \simeq H^q(X,\mathscr{G})\) を得る.
+\[\begin{tikzcd}
+	{H^q(\mathcal{U},\mathscr{G})} &&&& {H^q(\mathcal{V},\mathscr{G})} \\
+	\\
+	{H^q(\mathcal{U},\mathscr{F})} &&&& {H^q(\mathcal{V},\mathscr{F})} \\
+	&& {H^q(X,\mathscr{F})} \\
+	\\
+	&& {H^q(X,\mathscr{G})}
+	\arrow[from=4-3, to=6-3]
+	\arrow["{\tau_\mathcal{U}^\mathcal{V}}", from=3-1, to=3-5]
+	\arrow["{\tau_\mathcal{U} \circ H(\varphi^q_\mathcal{U})^{-1}}"{description}, from=3-1, to=6-3]
+	\arrow["{\tau_\mathcal{U}}", from=3-1, to=4-3]
+	\arrow["{\tau_\mathcal{V}}"', from=3-5, to=4-3]
+	\arrow["{\tau_\mathcal{V} \circ H(\varphi^q_\mathcal{V})^{-1}}"{description}, from=3-5, to=6-3]
+	\arrow["{\tau_\mathcal{U}^\mathcal{V}}", from=1-1, to=1-5]
+	\arrow["{H(\varphi^q_\mathcal{U})}", from=1-1, to=3-1]
+	\arrow["{H(\varphi^q_\mathcal{V})}", from=1-5, to=3-5]
+\end{tikzcd}\]
+従って, 次が得られる:
+\begin{theorem*}
+    層の間の同型 \(\mathscr{F} \simeq \mathscr{G}\) が与えられたとき, この同型は\v{C}echコホモロジー群の間の同型 \(H^q(X,\mathscr{F}) \simeq H^q(X,\mathscr{G})\) を誘導する.
+\end{theorem*}
+
+\begin{defi*}
+    \(X\) を閉Riemann面, \(U\) を開集合とするとき, \(\mathcal{M}_X(U)\) を \(U\) 上の有理型関数全体, \(\mathcal{O}_X(U)\) を \(U\) 上の正則関数全体の成す \(\mathbb{C}\) 代数し, \(\Omega_X(U)\) を \(U\) 上の正則微分全体の成す \(\mathbb{C}\) 代数とする. このとき, 因子 \(D \in \textrm{Div}(X)\) と開集合 \(U\) に対し,
+    \begin{align*}
+        \mathcal{O}_X(D)(U) &:= \{f\in \mathcal{M}(U) \mid \div(f) + D|_U \geq 0\}\\
+        \mathcal{L}_X(D) &:= \mathcal{O}_X(D)(X)\\
+        \Omega_X(D)(U) &:= \{\omega \in \Omega_X(U) \mid \div(\omega) \geq D|_U\}\\
+        \mathfrak{J}_X(D) &:= \Omega_X(D)(X)
+    \end{align*}
+    と定める. これにより \(\mathcal{O}_X\) 代数の層 \(\mathcal{O}_X(D)\), \(\Omega_X(D)\) を定める. また,
+    \begin{align*}
+        h^0(\mathcal{O}(D)) &:= \dim_\mathbb{C} H^0(X,\mathcal{O}(D))\\
+        h^1(\mathcal{O}(D)) &:= \dim_\mathbb{C} H^1(X,\mathcal{O}(D))
+    \end{align*}
+    と定める.
+\end{defi*}
+\(\mathcal{O}_X(K_X - D) \simeq \Omega_X(D)\) であった. Riemann-Rochの定理を次の形で与える:
+\[
+    h^0(\mathcal{O}_X(D)) - h^1(\mathcal{O}_X(D)) = 1 - g + \deg D
+\]
+また, Serre双対性
+\[
+    h^1(\mathcal{O}_X(D)) = h^0(\mathcal{O}_X(K_X-D))
+\]
+によって, \(h^0(\mathcal{O}_X(K_X-D)) = \dim_\mathbb{C} H^0(X,\Omega_X(D)) = \dim_\mathbb{C} \mathfrak{J}_X(D)\) であるから, Riemann-Rochの定理を次のように書き換えることができる:
+\[
+    \dim_\mathbb{C} \mathcal{L}_X(D) - \dim_\mathbb{C} \mathfrak{J}_X(D) = 1-g+\deg D
+\]
 \end{document}
