@@ -15,34 +15,39 @@
 
 
 
-\newenvironment{theorem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{theorem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{chapter}.\arabic{section}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{theorem*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{chapter}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{theorem*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{chapter}.\arabic{section}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{defi}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{defi}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{chapter}.\arabic{section}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{defi*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{chapter}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{defi*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Definition \arabic{chapter}.\arabic{section}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{lem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{lem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{chapter}.\arabic{section}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{lem*}[1]{\refstepcounter{theorem}\label{#1}\begin{itembox}[l]{\underline{Lemma \arabic{chapter}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{lem*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Lemma \arabic{chapter}.\arabic{section}.\arabic{theorem}.}}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{prop}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{chapter}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{prop}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{chapter}.\arabic{section}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{prop*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{chapter}.\arabic{theorem}. }}\vspace{-0.5zh}\ }{\end{itembox}}
+\newenvironment{prop*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Proposition \arabic{chapter}.\arabic{section}.\arabic{theorem}. }}\vspace{-0.5zh}\ }{\end{itembox}}
 
-\newenvironment{rem}{\refstepcounter{theorem}\begin{flushleft} \underline{Remark \arabic{chapter}.\arabic{theorem}.} \end{flushleft}\vspace{-1zh}\ }{}
+\newenvironment{cor}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Corollary \arabic{chapter}.\arabic{section}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{cor*}{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Corollary \arabic{chapter}.\arabic{section}.\arabic{theorem}. }}\vspace{-0.5zh}\ }{\end{itembox}}
+
+\newenvironment{rem}{\refstepcounter{theorem}\begin{flushleft} \underline{Remark \arabic{chapter}.\arabic{section}.\arabic{theorem}.} \end{flushleft}\vspace{-1zh}\ }{}
 
 \newenvironment{note}{\begin{flushleft} \underline{Notation.} \end{flushleft}\vspace{-1zh}\ }{}
 
-\newenvironment{eg}[1]{\refstepcounter{theorem}\begin{flushleft} \underline{Exempli gratia \arabic{chapter}.\arabic{theorem}. ({#1})} \end{flushleft}\vspace{-1zh}\ }{}
+\newenvironment{eg}[1]{\refstepcounter{theorem}\begin{flushleft} \underline{Exempli gratia \arabic{chapter}.\arabic{section}.\arabic{theorem}. ({#1})} \end{flushleft}\vspace{-1zh}\ }{}
 
 \renewenvironment{proof}{\begin{flushleft} \underline{Proof.} \end{flushleft}\vspace{-1zh}\ }{\qed\\}
 
+\newenvironment{proofof}[1]{\begin{flushleft} \underline{Proof of {#1}.} \end{flushleft}\vspace{-1zh}\ }{\qed\\}
 
-\newcounter{theorem}[chapter]
+\newcounter{theorem}[section]
 \setcounter{theorem}{0}
-\renewcommand{\thetheorem}{\arabic{chapter}.\arabic{theorem}}
+\renewcommand{\thetheorem}{\arabic{chapter}.\arabic{section}.\arabic{theorem}}
 \newcommand{\st}{{\rm\ s.t.\ }}
 \newcommand{\openset}{\underset{{\rm open}}{\subset}}
 \newcommand{\closedset}{\underset{{\rm closed}}{\subset}}
@@ -93,6 +98,7 @@
 これは小木曽啓示『代数曲線論』の5章を読み勉強した内容をノートにしたものである.
 
 \chapter{層係数コホモロジー}
+\section{\v{C}echコホモロジー}
 層に関する性質は既知のものとする. 例えば, 層の短完全列
 \[
     0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H} \to 0
@@ -818,8 +824,45 @@
     層の間の同型 \(\mathscr{F} \simeq \mathscr{G}\) が与えられたとき, この同型は\v{C}echコホモロジー群の間の同型 \(H^q(X,\mathscr{F}) \simeq H^q(X,\mathscr{G})\) を誘導する.
 \end{theorem*}
 
+\begin{defi}{算術種数}
+    \(\mathcal{O}_X\) は実は有限次元複素ベクトル空間で, その次元 \(g(X) = g = h^1(\mathcal{O}_X)\) を算術種数という. 閉Riemann面においては幾何種数と算術種数は一致している.
+\end{defi}
+
+\section{\(1\) 次\v{C}echコホモロジーの例}
+
+\begin{theorem*}
+    \(X\) 上の摩天楼層(サポートが有限な層) \(\mathcal{S}\) について,
+    \[
+        H^1(X,\mathcal{S}) = 0
+    \]
+    である.
+\end{theorem*}
+\begin{proof}
+    
+\end{proof}
+
+\begin{lem*}
+    \(\mathcal{U}\) を局所有限な \(X\) の開被覆とする. このとき, \(H^1(\mathcal{U}, \mathcal{A}_X ^{p,q}) = 0\) である. 特に, \(H^1(X,\mathcal{A}_X ^{p,q}) = 0\).
+\end{lem*}
+\begin{proof}
+    
+\end{proof}
+
+\begin{lem}{ドルボールの補題} \label{lem:dolbeault lemma}
+    \(0<R \leq \infty\) とする. \(\Delta_R \subset \mathbb{C}\) を原点中心で半径 \(R\) とする開円板とする. また, \(R=\infty\) のとき, \(\Delta_R = \mathbb{C}\) とする. このとき, \(h\in \mathcal{A}_{\Delta_R}^0(\Delta_R)\) なら, 偏微分方程式
+    \[
+        \frac{\partial g}{\partial \bar{z}} = h
+    \]
+    の解 \(g\in \mathcal{A}_{\Delta_R}^0 (\Delta_R)\) が存在する.
+\end{lem}
+
+\begin{cor*}
+    \(H^1(\Delta_R, \mathcal{O}_{\Delta_R}) = 0\) である. 特に, \(H^1(\mathbb{C},\mathcal{O}_\mathbb{C}) = 0\) である.
+\end{cor*}
+    
 \chapter{三大定理}
 
+\section{今野一宏『リーマン面と代数曲線』におけるRiemann-Rochの定理}
 \begin{defi*}
     \(X\) を閉Riemann面, \(U\) を開集合とするとき, \(\mathcal{M}_X(U)\) を \(U\) 上の有理型関数全体, \(\mathcal{O}_X(U)\) を \(U\) 上の正則関数全体の成す \(\mathbb{C}\) 代数し, \(\Omega_X(U)\) を \(U\) 上の正則微分全体の成す \(\mathbb{C}\) 代数とする. このとき, 因子 \(D \in \textrm{Div}(X)\) と開集合 \(U\) に対し,
     \begin{align*}
@@ -837,13 +880,13 @@
 \end{defi*}
 
 次の3つの定理を将来的に示す:
-\begin{theorem}{Riemann-Rochの定理}
+\begin{theorem}{Riemann-Rochの定理}\label{thm:Riemann-Roch}
     因子 \(D\in \textrm{Div}(X)\) について次が成立:
     \[
         h^0(\mathcal{O}_X(D)) - h^1(\mathcal{O}_X(D)) = 1 - g + \deg D
     \]
 \end{theorem}
-\begin{theorem}{Serre双対性}
+\begin{theorem}{Serre双対性}\label{thm:Serre duality}
     留数写像
     \[
         \textrm{res}\colon H^1(X,\Omega_X^1) \to \mathbb{C};\alpha \mapsto \frac{1}{2\pi \sqrt{-1}} \iint _X \beta,\ \delta^0(\beta)=\alpha
@@ -862,10 +905,10 @@
     \]
 \end{theorem}
 
-\begin{theorem}{消滅定理}
+\begin{theorem}{消滅定理}\label{thm:vanishing theorem}
     \(X\) 上の因子 \(D,C\in \textrm{Div}(X)\) について次が成立:
     \begin{enumerate}
-        \item \(\deg E <  \Rightarrow h^0(\mathcal{O}_X(E))=0\)
+        \item \(\deg E < 0 \Rightarrow h^0(\mathcal{O}_X(E))=0\)
         \item \(\deg D \geq 2g-1(=\deg K_X +1) \Rightarrow h^1(\mathcal{O}_X(D)) = 0\)
     \end{enumerate}
 \end{theorem}
@@ -874,7 +917,91 @@
     h^1(\mathcal{O}_X(D)) = h^0(\mathcal{O}_X(K_X-D))
 \]
 によって, \(h^0(\mathcal{O}_X(K_X-D)) = \dim_\mathbb{C} H^0(X,\Omega_X(D)) = \dim_\mathbb{C} \mathfrak{J}_X(D)\) であるから, Riemann-Rochの定理を次のように書き換えることができる:
-\[
-    \dim_\mathbb{C} \mathcal{L}_X(D) - \dim_\mathbb{C} \mathfrak{J}_X(D) = 1-g+\deg D
-\]
+\begin{equation}
+    \dim_\mathbb{C} \mathcal{L}_X(D) - \dim_\mathbb{C} \mathfrak{J}_X(D) = 1-g+\deg D \label{thm:Riemann-Roch in Seminar}
+\end{equation}
+逆に, 式(\ref{thm:Riemann-Roch in Seminar})からSerre双対性によりtheorem \ref{thm:Riemann-Roch}を得るため, 以下ではSerre双対性と消滅定理のみ示していく.
+
+\section{Serre双対性}
+Serre双対性を示すための準備をしていく.
+\begin{defi}{非退化な双線型形式}
+    \(V,W\) を有限次元線形空間とする. このとき, 写像 \(\langle \ast, \ast \ast \rangle \colon  V \times W \to \mathbb{C}\) が次を満たすとき, \(\langle \ast, \ast \ast \rangle\) を双一次形式, 双線型形式という:
+    \begin{enumerate}
+        \item \(\langle \ast, w \rangle \colon V \to \mathbb{C}\) がすべての \(w\in W\) に対して線形写像である.
+        \item \(\langle v, \ast\ast \rangle \colon W \to \mathbb{C}\) がすべての \(v\in V\) に対して線形写像である.
+    \end{enumerate}
+    加えて次の条件を満たすとき, 双線型形式 \(\langle\ast , \ast\ast \rangle\) は非退化(nondegenerate)という:
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item 線形写像 \(\iota_V \colon V \to W^\ast; v\mapsto \langle v,\ast \rangle\) は単射 \label{condition:nondegenerate 1}
+        \item 線形写像 \(\iota_W \colon W \to V^\ast; w\mapsto \langle \ast,w \rangle\) は単射 \label{condition:nondegenerate 2}
+    \end{enumerate}
+\end{defi}
+
+\begin{prop*}
+    \(V,\ W\) を有限次元線形空間, \(\langle \ast, \ast \ast \rangle \colon  V \times W \to \mathbb{C}\) を非退化な双線型形式とする. このとき, \(V\) と \(W\) は自然に互いを双対空間と見なすことができ, 特に \(\dim V =\dim W\) である.
+\end{prop*}
+\begin{proof}
+    条件\ref{condition:nondegenerate 1}, \ref{condition:nondegenerate 2}より,
+    \begin{align*}
+        \dim V \leq \dim W^\ast\\
+        \dim W \leq \dim V^\ast
+    \end{align*}
+    である. \(\dim V = \dim V^\ast\), \(\dim W = \dim W^\ast\) より,
+    \[
+        \dim V \leq \dim W^\ast = \dim W \leq \dim V^\ast
+    \]
+    であるから, \(\iota_V\), \(\iota_W\) は同型写像となり主張が従う.
+\end{proof}
+
+
+
+\begin{prop*}
+    \(X\) を閉Riemann面とするとき, 次の系列は完全系列となる:
+    \begin{equation}
+        0 \to \Omega_X^1 \xrightarrow{\iota} \mathcal{A}_X ^{1,0} \xrightarrow{d} \mathcal{A}_X^{1,1} = \mathcal{A}_X^2\to 0 \label{sequence:dolbeault complex}
+    \end{equation}
+\end{prop*}
+\begin{proof}
+    各点 \(P\in X\) について,
+    \begin{itemize}
+        \item \(\iota_P\) は単射
+        \item \(\Im \iota_P = \ker d_P\)
+        \item \(d_P\) は全射
+    \end{itemize}
+    を示せば良い. \(\iota_P\) の単射性は明らかである. \((z,U)\) を \(P\) での座標近傍系とし, \(U\) は座標開円板であるとする.
+    \begin{itemize}
+        \item \(\Im \iota_P = \ker d_P\)
+        
+        \(\eta \in \mathcal{A}_{X,P} ^{1,0}\) は \(U\) 上の \(C^\infty\) 級関数 \(f\) によって, \(U\) 上 \(\eta = [f(z)dz]\) と表示できる. \(\eta \in \ker d_P\) なら,
+        \[
+            d_P \eta = \left[ \frac{\partial f}{\partial \bar{z}} d\bar{z} \wedge dz \right] = 0
+        \]
+        より, ある \(P\in V \subset U\) なる開近傍 \(V\) 上で
+        \[
+            \frac{\partial f}{\partial \bar{z}} d\bar{z} \wedge dz = 0\textrm{ on }V
+        \]
+        である. 即ち, \(V\) 上 \(\frac{\partial f}{\partial \bar{z}} = 0\) であり, これは \(f\) が \(V\) 上正則であることを意味する. 従って \(fdz\) は正則 \(1\) 形式であるから, \(\eta = [fdz] \in \Omega_{X,P}^1 = \Im \iota_P\) となる. これらの主張は同値であるから \(\eta \in \ker d_P \iff \eta \in \Im \iota_P\) となり主張が従う.
+
+        \item \(d_P\) は全射
+        
+        \(\eta \in \mathcal{A}_{X, P}^2\) の元は, \(g\in C^\infty(U)\) によって,
+        \[
+            \eta = [gd\bar{z} \wedge dz]
+        \]
+        と表示される. このとき, lemma \ref{lem:dolbeault lemma} より,
+        \[
+            \frac{\partial f}{\partial \bar{z}} = g
+        \]
+        となる \(f \in C^\infty(U)\) が取れる. \(\frac{\partial f}{\partial \bar{z}} d\bar{z} \wedge dz = d(fdz)\) より, \(\eta = [d(fdz)] = d_P([fdz])\in \Im d_P\) となる. よって \(d_P\) は全射である.
+    \end{itemize}
+    以上により系列(\ref{sequence:dolbeault complex})は完全系列であることが示された.
+\end{proof}
+
+
+\begin{proofof}{theorem \ref{thm:Serre duality}}
+
+\end{proofof}
+
+\section{消滅定理}
 \end{document}
