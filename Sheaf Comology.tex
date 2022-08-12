@@ -58,6 +58,7 @@
 \newcommand{\id}{\textrm{id}}
 \renewcommand{\ker}{\textrm{Ker }}
 \renewcommand{\div}{\textrm{div}}
+\renewcommand{\Res}[2]{\textrm{Res}_{#2} {#1}}
 
 
 \theoremstyle{definition}
@@ -567,7 +568,7 @@
     \[
         0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H} \to 0
     \]
-    が与えられたとき, 次の完全系列が誘導される:
+    が与えられたとき, 次の完全列が誘導される:
     \begin{align}
         0 \to H^0(X,\mathscr{F}) \xrightarrow{\alpha^0} H^0(X,\mathscr{G}) \xrightarrow{\beta^0} H^0(X,\mathscr{H}) \label{seq:exact sequence of 0th cohomology}\\
         H^1(X,\mathscr{F}) \xrightarrow{\alpha^1} H^1(X,\mathscr{G}) \xrightarrow{\beta^1} H^1(X,\mathscr{H}) \label{seq:exact sequence of 1st cohomology}
@@ -686,7 +687,7 @@
 \end{rem}
 
 \begin{theorem*}
-    \(X\) を位相空間, \(0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H}\to 0\) を \(X\) 上の層の短完全列とする. このとき, 次は完全系列である:
+    \(X\) を位相空間, \(0 \to \mathscr{F} \xrightarrow{\alpha} \mathscr{G} \xrightarrow{\beta} \mathscr{H}\to 0\) を \(X\) 上の層の短完全列とする. このとき, 次は完全列である:
     \[
         0 \to H^0(X,\mathscr{F}) \xrightarrow{\alpha^0} H^0(X,\mathscr{G}) \xrightarrow{\beta^0} H^0(X,\mathscr{H}) \xrightarrow{\delta^0} H^1(X,\mathscr{F}) \xrightarrow{\alpha^1} H^1(X,\mathscr{G}) \xrightarrow{\beta^1} H^1(X,\mathscr{H})
     \] 
@@ -767,7 +768,7 @@
 \end{proof}
 
 \begin{rem}
-    \(X\) がパラコンパクト多様体であるとき, 同様の方法で連結準同型 \(\delta^n \colon H^n(X,\mathscr{H}) \to H^{n+1}(X,\mathscr{F})\) が定まり, 次の系列は完全系列となる:
+    \(X\) がパラコンパクト多様体であるとき, 同様の方法で連結準同型 \(\delta^n \colon H^n(X,\mathscr{H}) \to H^{n+1}(X,\mathscr{F})\) が定まり, 次の系列は完全列となる:
     \begin{align*}
         &0 \to H^0(X,\mathscr{F}) \xrightarrow{\alpha^0} H^0(X,\mathscr{G}) \xrightarrow{\beta^0} H^0(X,\mathscr{H})\\
         &\xrightarrow{\delta^0} H^1(X,\mathscr{F}) \xrightarrow{\alpha^1} H^1(X,\mathscr{G}) \xrightarrow{\beta^1} H^1(X,\mathscr{H})\\
@@ -888,9 +889,9 @@
 \end{theorem}
 \begin{theorem}{Serre双対性}\label{thm:Serre duality}
     留数写像
-    \[
-        \textrm{res}\colon H^1(X,\Omega_X^1) \to \mathbb{C};\alpha \mapsto \frac{1}{2\pi \sqrt{-1}} \iint _X \beta,\ \delta^0(\beta)=\alpha
-    \]
+    \begin{equation}
+        \textrm{res}\colon H^1(X,\Omega_X^1) \to \mathbb{C};\alpha \mapsto \frac{1}{2\pi \sqrt{-1}} \iint _X \beta,\ \delta^0(\beta)=\alpha \label{map:residue map}
+    \end{equation}
     とカップ積
     \[
         \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \to H^1(X,\Omega_X^1);\ (\alpha,[[(\beta_{ij})_{i,j}]]) \mapsto \textrm{res} ([[(\alpha \beta_{ij})_{i,j}]])
@@ -957,7 +958,7 @@ Serre双対性を示すための準備をしていく.
 
 
 \begin{prop*}
-    \(X\) を閉Riemann面とするとき, 次の系列は完全系列となる:
+    \(X\) を閉Riemann面とするとき, 次の系列は完全列となる:
     \begin{equation}
         0 \to \Omega_X^1 \xrightarrow{\iota} \mathcal{A}_X ^{1,0} \xrightarrow{d} \mathcal{A}_X^{1,1} = \mathcal{A}_X^2\to 0 \label{sequence:dolbeault complex}
     \end{equation}
@@ -995,9 +996,32 @@ Serre双対性を示すための準備をしていく.
         \]
         となる \(f \in C^\infty(U)\) が取れる. \(\frac{\partial f}{\partial \bar{z}} d\bar{z} \wedge dz = d(fdz)\) より, \(\eta = [d(fdz)] = d_P([fdz])\in \Im d_P\) となる. よって \(d_P\) は全射である.
     \end{itemize}
-    以上により系列(\ref{sequence:dolbeault complex})は完全系列であることが示された.
+    以上により系列(\ref{sequence:dolbeault complex})は完全列であることが示された.
 \end{proof}
 
+次に留数写像(\ref{map:residue map})を定める.
+
+完全列(\ref{sequence:dolbeault complex})から誘導される\v{C}echコホモロジー群の完全列
+\[
+    H^0(X,\mathcal{A}_X^{1,0}) \xrightarrow{d} H^0(X,\mathcal{A}_X^2) \xrightarrow{\delta^0} H^1(X,\Omega_X^1) \to H^1(X,\mathcal{A}_X^{1,0}) = 0 
+\]
+によって \(\delta^0\) は全射となることから, \(\alpha \in H^1(X,\Omega_X^1)\) を取れば, \(\delta^0(\beta) = \alpha\) となる \(\beta \in H^0(X,\mathcal{A}_X^2)\) が \(dH^0(X,\mathcal{A}_X^{1,0})\) の和の違いを除き一意に定まる. このとき, 留数写像 \(\textrm{res}\colon H^1(X,\Omega_X^1) \to \mathbb{C}\) を,
+\[
+    \textrm{res}(\alpha) = \frac{1}{2\pi \sqrt{-1}}\int_X \beta
+\] 
+と定めるとこれはwell-definedである. 実際, \(\gamma \in H^0(X,\mathcal{A}_X^{1,0})\) を取るとき,
+\[
+    \int_X d\gamma = \int_{\partial X} \gamma = 0
+\]
+である.
+\[
+    \textrm{res}(\alpha) = \frac{1}{2\pi\sqrt{-1}} \int_X \beta = \sum_{p\in X} \Res{\beta}{p}
+\]
+である.
+
+\begin{rem}
+    \(\delta^0\) の準同型性により, \(a,a^\prime\in \mathbb{C}\), \(\alpha, \alpha^\prime \in H^1(X,\Omega_X^1)\) について, \(\alpha, \alpha^\prime\) の持ち上げを \(\beta, \beta^\prime\) とするとき, \(a\alpha + a^\prime \alpha^\prime\) の持ち上げは \(a\beta + a^\prime \beta^\prime\) であるため留数写像は線形写像である. 
+\end{rem}
 
 \begin{proofof}{theorem \ref{thm:Serre duality}}
 
