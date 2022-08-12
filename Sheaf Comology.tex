@@ -96,7 +96,7 @@
 \title{層係数コホモロジーの理論}
 \author{@Big\_ToiletPaper}
 \maketitle
-これは小木曽啓示『代数曲線論』の5章を読み勉強した内容をノートにしたものである.
+これは小木曽啓示『代数曲線論』の5章を読み勉強した内容をノートにしたものである. 私は今野一宏『リーマン面と代数曲線』にてRiemann-Rochの定理を扱っているため, その知識と合流することを目的としたノートとなっている.
 
 \chapter{層係数コホモロジー}
 \section{\v{C}echコホモロジー}
@@ -832,11 +832,7 @@
 \section{\(1\) 次\v{C}echコホモロジーの例}
 
 \begin{theorem*}
-    \(X\) 上の摩天楼層(サポートが有限な層) \(\mathcal{S}\) について,
-    \[
-        H^1(X,\mathcal{S}) = 0
-    \]
-    である.
+    \(X\) 上の摩天楼層(サポートが有限な層) \(\mathcal{S}\) について, \( H^1(X,\mathcal{S}) = 0\) である.
 \end{theorem*}
 \begin{proof}
     
@@ -857,7 +853,7 @@
     の解 \(g\in \mathcal{A}_{\Delta_R}^0 (\Delta_R)\) が存在する.
 \end{lem}
 
-\begin{cor*}
+\begin{cor*}\label{cor:vanished cohomology}
     \(H^1(\Delta_R, \mathcal{O}_{\Delta_R}) = 0\) である. 特に, \(H^1(\mathbb{C},\mathcal{O}_\mathbb{C}) = 0\) である.
 \end{cor*}
     
@@ -880,7 +876,7 @@
     と定める.
 \end{defi*}
 
-次の3つの定理を将来的に示す:
+層係数コホモロジーを使ったRiemann-Rochの定理を今野一宏『リーマン面と代数曲線』で示したものに書き換えていく.
 \begin{theorem}{Riemann-Rochの定理}\label{thm:Riemann-Roch}
     因子 \(D\in \textrm{Div}(X)\) について次が成立:
     \[
@@ -888,30 +884,14 @@
     \]
 \end{theorem}
 \begin{theorem}{Serre双対性}\label{thm:Serre duality}
-    留数写像
-    \begin{equation}
-        \textrm{res}\colon H^1(X,\Omega_X^1) \to \mathbb{C};\alpha \mapsto \frac{1}{2\pi \sqrt{-1}} \iint _X \beta,\ \delta^0(\beta)=\alpha \label{map:residue map}
-    \end{equation}
-    とカップ積
     \[
-        \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \to H^1(X,\Omega_X^1);\ (\alpha,[[(\beta_{ij})_{i,j}]]) \mapsto \textrm{res} ([[(\alpha \beta_{ij})_{i,j}]])
+        H^0(X,\Omega_X^1(-D)) \simeq H^1(X,\mathcal{O}_X(D))^\ast
     \]
-    の合成
-    \[
-        \left\langle \ast, \ast\ast \right\rangle = \textrm{res} \circ \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \mapsto \mathbb{C};(\alpha,[[(\beta_{ij})_{i,j}]]) \mapsto \textrm{res}([[(\alpha \beta_{ij})_{i,j}]])
-    \]
-    は非退化な双一次形式である. 特に次の等式が成り立つ:
+    である. 特に,
     \[
         h^0 (\mathcal{O}_X(K_X-D)) = h^0(\Omega_X^1(-D)) = h^1(\mathcal{O}_X(D))
     \]
-\end{theorem}
-
-\begin{theorem}{消滅定理}\label{thm:vanishing theorem}
-    \(X\) 上の因子 \(D,C\in \textrm{Div}(X)\) について次が成立:
-    \begin{enumerate}
-        \item \(\deg E < 0 \Rightarrow h^0(\mathcal{O}_X(E))=0\)
-        \item \(\deg D \geq 2g-1(=\deg K_X +1) \Rightarrow h^1(\mathcal{O}_X(D)) = 0\)
-    \end{enumerate}
+    である.
 \end{theorem}
 \(\mathcal{O}_X(K_X - D) \simeq \Omega_X(D)\) であった. また, Serre双対性
 \[
@@ -999,7 +979,7 @@ Serre双対性を示すための準備をしていく.
     以上により系列(\ref{sequence:dolbeault complex})は完全列であることが示された.
 \end{proof}
 
-次に留数写像(\ref{map:residue map})を定める.
+次に留数写像を定める.
 
 完全列(\ref{sequence:dolbeault complex})から誘導される\v{C}echコホモロジー群の完全列
 \[
@@ -1014,18 +994,62 @@ Serre双対性を示すための準備をしていく.
     \int_X d\gamma = \int_{\partial X} \gamma = 0
 \]
 である.
-\[
-    \textrm{res}(\alpha) = \frac{1}{2\pi\sqrt{-1}} \int_X \beta = \sum_{p\in X} \Res{\beta}{p}
-\]
-である.
 
 \begin{rem}
     \(\delta^0\) の準同型性により, \(a,a^\prime\in \mathbb{C}\), \(\alpha, \alpha^\prime \in H^1(X,\Omega_X^1)\) について, \(\alpha, \alpha^\prime\) の持ち上げを \(\beta, \beta^\prime\) とするとき, \(a\alpha + a^\prime \alpha^\prime\) の持ち上げは \(a\beta + a^\prime \beta^\prime\) であるため留数写像は線形写像である. 
 \end{rem}
 
-\begin{proofof}{theorem \ref{thm:Serre duality}}
+\(X\) 上の因子 \(D\in \textrm{Div}(X)\) について, \(\mathcal{O}_X(D)\) と \(\Omega_X^1(-D) \simeq \mathcal{O}_X(K_X -D)\) は階数 \(1\) の局所自由層(可逆層)である. 即ち, 各点 \(P \in X\) に対して, 開円板 \(P \in U_P\) が存在して, \(\mathcal{O}_{U_P}\)-加群の層として \(\mathcal{O}_X(D)|_{U_P},\ \Omega_X^1(-D)|_{U_P} \simeq \mathcal{O}_{U_P}\) となるものが取れる. こうして得られる開被覆 \(\mathcal{U} =\{U_i\}_{i\in I}\) は同型 \(\Omega_X^1(-D) \simeq \mathcal{O}_X(K_X-D)\) とCorollary \ref{cor:vanished cohomology}よりLeray被覆である. 従って,
+\begin{align*}
+    &\tau_\mathcal{U} \colon H^1(\mathcal{U},\mathcal{O}_X(D)) \to H^1(X,\mathcal{O}_X(D))\\
+    &\tau_\mathcal{U} \colon H^1(\mathcal{U},\Omega_X^1(-D)) \to H^1(X,\Omega_X^1(-D))
+\end{align*}
+は同型写像となる. 即ち, \(\tau_\mathcal{U}\) によって \(\eta \in H^1(\mathcal{U},\mathcal{O}_X(D))\) と \([\eta] \in H^1(X,\mathcal{O}_X(D))\) を同一視する. \(\eta = [(f_{ij})_{i,j \in I}]\) と代表元表示すれば, この同一視により, \([\eta] = \eta = [(f_{ij})_{i,j \in I}]\) となる. こうしてカップ積を次のように定める:
+\[
+    \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \to H^1(X,\Omega_X^1);(\alpha, [(\beta_{ij})_{i,j \in I}]) \mapsto [(\alpha \beta_{ij})_{i,j\in I}]
+\]
+\(\Omega_X^1(-D)\) は \(\mathcal{O}_X\)-加群であるから, \(\alpha \beta_{ij} \in \Omega_X^1(-D)(U_{ij})\) となり確かに写像は定まっている. こうして留数写像とカップ積の合成により次の双線形形式を得る:
+\[
+    \left\langle \ast,\ast\ast\right\rangle =\textrm{res} \circ \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \to \mathbb{C};(\alpha, [(\beta_{ij})_{i,j\in I}]) \mapsto \textrm{res}([(\alpha\beta_{ij})_{i,j\in I}]) 
+\]
+Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\mathcal{U},\mathscr{F}) \simeq H^1(\mathcal{V},\mathscr{F})\) であったから, 開被覆に依存せず上の写像は定まっている.
 
+\begin{theorem}{Serre双対性}
+    上で定めた写像
+    \[
+        \left\langle \ast,\ast\ast\right\rangle =\textrm{res} \circ \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \to \mathbb{C};(\alpha, [(\beta_{ij})_{i,j\in I}]) \mapsto \textrm{res}([(\alpha\beta_{ij})_{i,j\in I}]) 
+    \]
+    は非退化な双線型形式である.
+\end{theorem}
+
+\begin{proofof}{theorem \ref{thm:Serre duality}}
+    凄まじく大変そうなので気が向くまで読まないかもしれない.
 \end{proofof}
 
 \section{消滅定理}
+閉Riemann面の上の次数の十分大きい因子 \(D\) に付随する層 \(\mathcal{O}_X(D)\) は消滅する(\(0\) となる)ことを示していく. これらはRiemann-Rochの定理とSerre双対性から従う.
+
+
+\begin{theorem}{消滅定理}\label{thm:vanishing theorem}
+    \(X\) 上の因子 \(D,C\in \textrm{Div}(X)\) について次が成立:
+    \begin{enumerate}
+        \item \(\deg E < 0 \Rightarrow h^0(\mathcal{O}_X(E))=0\)
+        \item \(\deg D \geq 2g-1(=\deg K_X +1) \Rightarrow h^1(\mathcal{O}_X(D)) = 0\)
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \vspace{-2zh}
+    \begin{enumerate}
+        \item \(h^0(\mathcal{O}_X(E)) \neq 0\) なら, \(f\in \mathcal{O}_X(E)(X) \setminus \{0\}\) が取れる. このとき, \(E^\prime = \div(f) + E \geq 0\) と定めると, \(\deg E^\prime = \deg E\) であり, \(E^\prime \geq 0\) より \(\deg E = \deg E^\prime \geq 0\) である. 従って対偶を取ることにより主張が得られる. 
+        \item \(\deg K_X = 2g-2\) より, \(\deg(K_X- D) < 0\) である. よって \(h^1(\mathcal{O}_X(D)) = h^0(\mathcal{O}_X(K_X-D)) = 0\) である.
+    \end{enumerate}
+    \vspace{-2zh}
+\end{proof}
+
+\begin{cor*}
+    \(\deg D> 2g-1 \Rightarrow h^0(\mathcal{O}_X(D)) = 1-g+\deg D\)
+\end{cor*}
+\begin{proof}
+消滅定理とRiemann-Rochの定理より明らかである.
+\end{proof}
 \end{document}
