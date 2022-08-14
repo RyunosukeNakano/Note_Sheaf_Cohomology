@@ -99,6 +99,7 @@
 これは小木曽啓示『代数曲線論』の5章を読み勉強した内容をノートにしたものである. 私は今野一宏『リーマン面と代数曲線』にてRiemann-Rochの定理を扱っているため, その知識と合流することを目的としたノートとなっている.
 
 \chapter{層係数コホモロジー}
+特に断らない限り \(X\) は位相空間とする.
 \section{\v{C}echコホモロジー}
 層に関する性質は既知のものとする. 例えば, 層の短完全列
 \[
@@ -825,9 +826,7 @@
     層の間の同型 \(\mathscr{F} \simeq \mathscr{G}\) が与えられたとき, この同型は\v{C}echコホモロジー群の間の同型 \(H^q(X,\mathscr{F}) \simeq H^q(X,\mathscr{G})\) を誘導する.
 \end{theorem*}
 
-\begin{defi}{算術種数}
-    \(\mathcal{O}_X\) は実は有限次元複素ベクトル空間で, その次元 \(g(X) = g = h^1(\mathcal{O}_X)\) を算術種数という. 閉Riemann面においては幾何種数と算術種数は一致している.
-\end{defi}
+
 
 \section{\(1\) 次\v{C}echコホモロジーの例}
 
@@ -858,8 +857,13 @@
 \end{cor*}
     
 \chapter{三大定理}
-
+この章では断りの無い限り \(X\) は閉Riemann面とする.
 \section{今野一宏『リーマン面と代数曲線』におけるRiemann-Rochの定理}
+
+\begin{defi}{算術種数}
+    \(X\) を閉Riemann面とする. このとき, \(H^1(X,\mathcal{O}_X)\) は実は有限次元複素ベクトル空間で, その次元 \(g(X) = g = h^1(\mathcal{O}_X)\) を算術種数という. これは, 実 \(2\) 次元の向き付け可能な閉曲面に対して定まる種数と一致している.
+\end{defi}
+
 \begin{defi*}
     \(X\) を閉Riemann面, \(U\) を開集合とするとき, \(\mathcal{M}_X(U)\) を \(U\) 上の有理型関数全体, \(\mathcal{O}_X(U)\) を \(U\) 上の正則関数全体の成す \(\mathbb{C}\) 代数し, \(\Omega_X(U)\) を \(U\) 上の正則微分全体の成す \(\mathbb{C}\) 代数とする. このとき, 因子 \(D \in \textrm{Div}(X)\) と開集合 \(U\) に対し,
     \begin{align*}
@@ -1047,9 +1051,87 @@ Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\
 \end{proof}
 
 \begin{cor*}
-    \(\deg D> 2g-1 \Rightarrow h^0(\mathcal{O}_X(D)) = 1-g+\deg D\)
+    \(\deg D \geq 2g-1 \Rightarrow h^0(\mathcal{O}_X(D)) = 1-g+\deg D\)
 \end{cor*}
 \begin{proof}
 消滅定理とRiemann-Rochの定理より明らかである.
 \end{proof}
+
+\chapter{正則ベクトル束}
+\section{正則ベクトル束}
+ここでは \(X\) は断りが無い限り(コンパクトとは限らない)Riemann面とする.
+\begin{defi}{正則ベクトル束, \(C^\infty\)-ベクトル束}
+    \(L\) を位相空間, \(\pi\colon L \to X\) を連続写像とし, 各点 \(p\in X\) に対して, 図式
+    \[\begin{tikzcd}
+        {\pi^{-1}(U_p)} && {\mathbb{C}^r \times U_p} \\
+        \\
+        & U
+        \arrow[from=1-1, to=3-2]
+        \arrow[from=1-3, to=3-2]
+        \arrow["{\tau_i}", from=1-1, to=1-3]
+    \end{tikzcd}\]
+    を可換にするような点 \(p\) の開近傍 \(U_p\) と同相写像 \(\tau_i \colon \pi^{-1}(U_p) \to \mathbb{C}^r \times U_p\) が定まっているとする. このとき, 次の条件を満たすような連続写像 \(\pi\colon L \to X\) と同相写像の族 \(\{\tau_p\}\) の組 \((\pi,\ \{\tau_p\}_{p\in X})\), または単に \(L\) を正則ベクトル束という:
+
+     \(U_p \cap U_q \neq \emptyset\) なら, 同相写像 \(\tau_i \circ \tau_j^{-1} \colon \mathbb{C}^r \times (U_p \cap U_q) \to \mathbb{C}^r \times (U_p \cap U_q)\) は, ある \(n\times n\) 行列 \(g \in \textrm{GL}(n;\mathcal{O}_X(U_p \cap U_q))\) によって, \(\tau_i \circ \tau_j^{-1} (l,z) = (g(z)l,z)\) (\((l,z) \in \mathbb{C}^r \times (U_p \cap U_q)\)) と表される.
+
+    このとき, 族 \(\{\tau_p\}_{p\in L}\) を正則ベクトル束 \(L\) の正則構造(a holomorphic strucure on the holomorphic vector bundle \(L\))といい, \(r\) をその階数という. また, 正則構造 \(\{\tau_p\}_{p\in L}\) を \(L\) の局所自明化(local trivialization of \(L\))という.
+\end{defi}
+\begin{rem}
+    各点 \(p\in X\) に対して正則ベクトル束の条件を満たすような開近傍 \(U_p\) が取れる. \(p\) を動かすことにより \(X\) の開被覆 \(\mathcal{U}= \{U_i\}_{i\in I}\) が作れる. 従って, 定義を開被覆 \(\mathcal{U}= \{U_i\}_{i\in I}\) について, 各 \(i\in I\) に対して図式
+    \[\begin{tikzcd}
+        {\pi^{-1}(U_i)} && {\mathbb{C}^r \times U_i} \\
+        \\
+        & U
+        \arrow[from=1-1, to=3-2]
+        \arrow[from=1-3, to=3-2]
+        \arrow["{\tau_i}", from=1-1, to=1-3]
+    \end{tikzcd}\]
+    を可換にし, \(U_{ij} \neq \emptyset\) なら, 同相写像 \(\tau_i \circ \tau_j^{-1} \colon \mathbb{C}^r \times U_{ij} \to \mathbb{C}^r \times U_{ij}\) は, ある \(n\times n\) 行列 \(g \in \textrm{GL}(n;\mathcal{O}_X(U_{ij}))\) によって, \(\tau_i \circ \tau_j^{-1} (l,z) = (g(z)l,z)\) (\((l,z) \in \mathbb{C}^r \times U_{ij}\)) と表されることを正則ベクトル束の定義としてもよい. そのときは, 正則ベクトル束の正則構造は \(\{\tau_i\}_{i\in I}\) で与えられる.
+\end{rem}
+
+\begin{defi*}
+    \(L, L^\prime\) を階数 \(r\) の正則ベクトル束とする. 開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) によって \(L\) と \(L^\prime\) の正則構造をそれぞれ \(\{\tau_i\}_{i\in I}\) と \(\{\tau^\prime_i\}_{i\in I}\) で与える. このとき, 正則構造 \(\{\tau_i\}_{i\in I}\) と \(\{\tau^\prime_i\}_{i\in I}\) が同値であるとは, ある同相写像 \(\varphi \colon L \to L^\prime\) が存在して, \(\varphi\) から誘導される同相写像 \(\varphi_{U_i} \colon \pi^{-1}(U_i) \to (\pi^\prime)^{-1}(U_i)\) によって得られる同相写像 \(\tau_i^\prime \circ \varphi_{U_i} \circ \tau_i ^{-1} \colon \mathbb{C}^r \times U_i \to \mathbb{C}^r \times U_i\) が, 正則関数 \(g_i \in \textrm{GL}(r;\mathcal{O}(U_i))\) によって
+    \[
+        (\tau_i^\prime \circ \varphi_{U_i} \circ \tau_i ^{-1})(l,z) = (g_i(z)l,z)
+    \]
+    と表されるときをいう.
+\end{defi*}
+
+\begin{rem}
+    \(L=L^\prime\) であるとき, 同値な正則構造を \(\{\tau_i\}_{i\in I}\), \(\{\tau_i ^\prime\}_{i\in I}\) を与えると, 同相写像 \(\varphi\) は恒等写像 \(\id_L\) で与えられ,
+    \begin{align*}
+        \tau^\prime_j \circ \tau_i (l,z)
+        &= (\tau^\prime_j \circ (\tau^\prime_i)^{-1}) \circ (\tau^\prime_i \circ \tau_i )(z,l)\\
+        &= (\tau^\prime_j \circ (\tau^\prime_i)^{-1})(g_i(z)l,z)\\
+        &= (g_{ij}(z)g_i(z)l,z)
+    \end{align*}
+    となる. これは \(\{\tau_i\}_{i\in I} \cup \{\tau^\prime_i\}_{i\in I}\) が再び正則構造であることを意味している. 従って, 一般に正則構造が同型であるとは, 同相写像 \(\varphi \colon L \to L^\prime\) によって \(L\) と \(L\) を同一視したとき, \(\{\tau_i\}_{i\in I} \cup \{\tau^\prime_i\}_{i\in I}\) が再び \(L \simeq L^\prime\) の正則構造であることを意味している.
+\end{rem}
+
+\begin{rem}
+    正則ベクトル束 \(L\) について開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) に対して正則構造 \(\{\tau_i\}_{i\in I}\) を与えたとき, 任意の細分 \(\mathcal{V} = \{V_j\}_{j\in J} > \mathcal{U}\) に対して自然に正則構造が定まる. \(V_j\) に対して, \(V_j \subset U_i\) なる \(U_i\) を取り, \(\tau_j^\prime \colon \pi^{-1}(V_j) \to \mathbb{C}^r \times V_j\) を, 同相写像 \(\tau_i \colon \pi^{-1}(U_i) \to \mathbb{C}^r \times U_i\) の制限と思えば良い. \(\tau^\prime_s \circ \tau^\prime_t (l,z) = (g_{st}(z)l,z)\) となる \(g_{st}\in \textrm{GL}(r;\mathcal{O}_X(V_{st}))\) は, \(V_s \subset U_i\), \(V_t \subset U_j\) となる \(U_i,\ U_j\) によって \(U_{ij}\) 上 \(\tau_i \circ \tau_j^{-1} (l,z) = (g(z)l,z)\) となる \(g\in \textrm{GL}(r;\mathcal{O}_X(U_{ij}))\) の各要素を \(V_{st}\) に制限したものとして与えられる.
+\end{rem}
+
+\begin{defi*}
+    \(\pi\colon L\to X\), \(\pi^\prime \colon L^\prime \to X\) を正則ベクトル束とし,  \(X\) の開被覆 \(\mathcal{U}= \{U_i\}_{i\in I}\), \(\mathcal{V} = \{V_j\}_{j\in J}\) によって, \(L\), \(L^\prime\) の正則構造をそれぞれ \(\{\tau_i\}_{i\in I}\), \(\{\tau^\prime_j\}_{j\in J}\) で与えるとする. このとき, 正則ベクトル束 \(L\), \(L^\prime\) がベクトル束として同型であるとは, ある \(\mathcal{U}\), \(\mathcal{V}\) の細分 \(\mathcal{W} = \{W_k\}_{k\in K}\) によって与えられる \(L\) と \(L^\prime\) 上の正則構造 \(\{\tau^{\prime\prime}_k\}_{k\in K}\) が存在して, \(\{\tau_i\}_{i\in I}\) と \(\{\tau^{\prime\prime}_k\}_{k\in K}\), \(\{\tau^\prime _j\}_{j\in J}\) と \(\{\tau^{\prime\prime}_k\}_{k\in K}\) がそれぞれ同値な正則構造であるときと定める.
+\end{defi*}
+
+\begin{rem}
+    当然, 正則ベクトル束 \(\pi\colon L \to X\) の上の正則構造 \(\{\tau_i\}_{i\in I}\), \(\{\tau^\prime_j\}_{j\in J}\) を2つ与えたときこれらは同値となる.
+\end{rem}
+
+\begin{defi}{正則切断}
+    \(\mathcal{U} = \{U_i\} _{i\in I}\) を開被覆, \((\pi\colon L\to X, \{\tau_i\}_{i\in I})\) を階数 \(r\) の正則ベクトル束とし, 開集合 \(U\subset X\) 上の写像 \(s\colon U \to \pi^{-1}(U)\) を連続写像とする. このとき, \(s\) が \(L\) に値を持つ \(U\) 上の正則切断であるとは次を満たすときである:
+    \begin{enumerate}
+        \item \(\pi \circ s = \id_U\)
+        \item ある \(l \in \mathcal{O}_X(U\cap U_i)^r\) によって, 制限の合成写像
+            \[\begin{tikzcd}
+                {U\cap U_i} && {\pi^{-1}(U\cap U_i)} && {\mathbb{C}^r\times (U\cap U_i)}
+                \arrow["{s|{U\cap U_i}}", from=1-1, to=1-3]
+                \arrow["{{\tau_i }|{\pi^{-1}(U\cap U_i)}}", from=1-3, to=1-5]
+            \end{tikzcd}\]
+            が \(z\mapsto (l(z),z)\) で与えられる.
+    \end{enumerate}
+    \(L\) に値を持つ \(U\) 上の正則切断全体の集合を \(\mathcal{O}_X(L)(D)\) と表す.
+\end{defi}
 \end{document}
