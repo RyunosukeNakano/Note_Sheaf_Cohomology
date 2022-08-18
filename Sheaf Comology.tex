@@ -1024,6 +1024,11 @@ Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\
         \left\langle \ast,\ast\ast\right\rangle =\textrm{res} \circ \cup \colon H^0(X,\Omega_X^1(-D)) \times H^1(X,\mathcal{O}_X(D)) \to \mathbb{C};(\alpha, [(\beta_{ij})_{i,j\in I}]) \mapsto \textrm{res}([(\alpha\beta_{ij})_{i,j\in I}]) 
     \]
     は非退化な双線型形式である.
+    
+    つまり, \(H^0(X, \Omega_X^1(-D))\) と \(H^1(X,\mathcal{O}_X(D))\) はベクトル空間として同型であり, 特に
+    \[
+        \dim_\mathbb{C} H^0(X, \Omega_X^1(-D)) = \dim_\mathbb{C}H^1(X,\mathcal{O}_X(D))
+    \]
 \end{theorem}
 
 \begin{proofof}{theorem \ref{thm:Serre duality}}
@@ -1211,6 +1216,32 @@ Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\
 \end{prop*}
 
 <<<<<<< HEAD
+\begin{defi*}
+    \(\mathcal{A}\) をRiemann面 \(X\) 上の環の層とし, \(\mathcal{M}\) を \(\mathcal{O}_X\)-代数の層とする. このとき,
+    \begin{enumerate}
+        \item \(M\) が階数 \(r\) の自由 \(\mathcal{A}\)-加群であるとは, ある \(r\) 個の \(\mathcal{M}(X)\) の元 \(e_1,\ldots ,e_r\) が存在して, 任意の開集合 \(U\) に対して, 準同型
+        \[
+            \mathcal{A}(U)^{\oplus r} \to \mathcal{M}(U);(a_1,\ldots,a_r) \mapsto a_1 e_1 +\cdots +a_r e_r
+        \]
+        が同型写像であるときをいう.
+
+        \item \(\mathcal{M}\) が階数 \(r\) の局所自由\(\mathcal{A}\)-加群であるとは, ある開被覆 \(\mathcal{U}=\{U_i\}_{i \in I}\) が存在して, \(\mathcal{M}|_{U_i}\) が階数 \(r\) の自由 \(\mathcal{A}|_{U_i}\)-加群の層に同型であるときと定める.
+    \end{enumerate}
+\end{defi*}
+
+\begin{theorem*}
+    \(L\) を階数 \(r\) の正則ベクトル束とする. このとき, ある階数 \(r\) の局所自由 \(\mathcal{O}_X\)-加群 \(\mathcal{L}\) が存在して, \(L\) に値を取る正則切断の層 \(\mathcal{O}_X(L)\) と \(\mathcal{L}\) は同型になる. また, 階数 \(r\) の局所自由 \(\mathcal{O}_X\)-加群 \(\mathcal{L}\) を与えるとき, 階数 \(r\) の正則ベクトル束 \(L\) で \(\mathcal{L}\) と \(\mathcal{O}_X(L)\) が同型になるようなものが存在する.
+\end{theorem*}
+\begin{proof}
+    \(L\) を階数 \(r\) の正則ベクトル束とする. \(L\) の正則構造を開被覆 \(\mathcal{U} = \{U_i\}_{i\in I}\) によって \(\{\tau_i\}_{i\in I}\) で与える. このとき, この開被覆によって \(\mathcal{O}_X(L)|_{U_i}\) と \(\mathcal{O}_X|_{U_i}\) は同型となるこを示す. \(U\subset U_i\) について, \(s\in \mathcal{O}_X(L)(U)\) は, 局所自明化を通して \(g_i \in \mathcal{O}_X(U)^{\otimes r}\) によって
+    \[
+        \tau_i \circ s \colon U \to  \mathbb{C}^r \times U;z\mapsto (g_i(z),z)
+    \]
+    と表示できた. \(U\subset U_i\) 上, この表示は一意的であるため, \(g_i  = (f_1,\ldots,f_r)\) と表すとき, 対応 \(s \mapsto (f_1,\ldots,f_r)\) によって明らかに \(\mathcal{O}_X(L)(U) \simeq \mathcal{O}(U)\) となる. 従って \(L\) から \(\mathcal{O}_X(L)\) が階数 \(r\) の局所自由 \(\mathcal{O}_X\)-加群の層であることがわかった.
+
+    次に, \(\mathcal{L}\) を階数 \(r\) の局所 \(\mathcal{O}_X\)-加群の層とする.
+
+\end{proof}
 \begin{defi*}
     \(\mathcal{A}\) をRiemann面 \(X\) 上の環の層とし, \(\mathcal{M}\) を \(\mathcal{O}_X\)-代数の層とする. このとき,
     \begin{enumerate}
