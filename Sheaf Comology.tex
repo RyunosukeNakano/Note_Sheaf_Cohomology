@@ -12,8 +12,8 @@
 \usepackage{amsthm}
 \usepackage{ascmac}%itembox
 \usepackage{amsmath}
-
-
+\usepackage{capt-of}
+\usepackage{captdef}
 
 \newenvironment{theorem}[1]{\refstepcounter{theorem}\begin{itembox}[l]{\underline{Theorem \arabic{chapter}.\arabic{section}.\arabic{theorem}. ({#1})}}\vspace{-0.5zh}\ }{\end{itembox}}
 
@@ -1067,14 +1067,17 @@ Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\
 ここでは \(X\) は断りが無い限り(コンパクトとは限らない)Riemann面とする.
 \begin{defi}{正則ベクトル束, \(C^\infty\)-ベクトル束}
     \(L\) を位相空間, \(\pi\colon L \to X\) を連続写像とし, 各点 \(p\in X\) に対して, 図式
-    \[\begin{tikzcd}
-        {\pi^{-1}(U_p)} && {\mathbb{C}^r \times U_p} \\
-        \\
-        & U
-        \arrow[from=1-1, to=3-2]
-        \arrow[from=1-3, to=3-2]
-        \arrow["{\tau_i}", from=1-1, to=1-3]
-    \end{tikzcd}\]
+    \begin{center}
+        \begin{tikzcd}
+            {\pi^{-1}(U_p)} && {\mathbb{C}^r \times U_p} \\
+            \\
+            & U
+            \arrow[from=1-1, to=3-2]
+            \arrow[from=1-3, to=3-2]
+            \arrow["{\tau_i}", from=1-1, to=1-3]
+        \end{tikzcd}
+        \captionof{figure}{}
+    \end{center}
     を可換にするような点 \(p\) の開近傍 \(U_p\) と同相写像 \(\tau_i \colon \pi^{-1}(U_p) \to \mathbb{C}^r \times U_p\) が定まっているとする. このとき, 次の条件を満たすような連続写像 \(\pi\colon L \to X\) と同相写像の族 \(\{\tau_p\}\) の組 \((\pi,\ \{\tau_p\}_{p\in X})\), または単に \(L\) を正則ベクトル束という:
 
      \(U_p \cap U_q \neq \emptyset\) なら, 同相写像 \(\tau_i \circ \tau_j^{-1} \colon \mathbb{C}^r \times (U_p \cap U_q) \to \mathbb{C}^r \times (U_p \cap U_q)\) は, ある \(n\times n\) 行列 \(g \in \textrm{GL}(n;\mathcal{O}_X(U_p \cap U_q))\) によって, \(\tau_i \circ \tau_j^{-1} (l,z) = (g(z)l,z)\) (\((l,z) \in \mathbb{C}^r \times (U_p \cap U_q)\)) と表される.
@@ -1083,14 +1086,18 @@ Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\
 \end{defi}
 \begin{rem}
     各点 \(p\in X\) に対して正則ベクトル束の条件を満たすような開近傍 \(U_p\) が取れる. \(p\) を動かすことにより \(X\) の開被覆 \(\mathcal{U}= \{U_i\}_{i\in I}\) が作れる. 従って, 定義を開被覆 \(\mathcal{U}= \{U_i\}_{i\in I}\) について, 各 \(i\in I\) に対して図式
-    \[\begin{tikzcd}
-        {\pi^{-1}(U_i)} && {\mathbb{C}^r \times U_i} \\
-        \\
-        & U
-        \arrow[from=1-1, to=3-2]
-        \arrow[from=1-3, to=3-2]
-        \arrow["{\tau_i}", from=1-1, to=1-3]
-    \end{tikzcd}\]
+    \begin{center}
+        \begin{tikzcd}
+            {\pi^{-1}(U_i)} && {\mathbb{C}^r \times U_i} \\
+            \\
+            & U
+            \arrow[from=1-1, to=3-2]
+            \arrow[from=1-3, to=3-2]
+            \arrow["{\tau_i}", from=1-1, to=1-3]
+        \end{tikzcd}
+        \captionof{figure}{}
+        \label{graph:commutation of holomorphic bundle}
+    \end{center}
     を可換にし, \(U_{ij} \neq \emptyset\) なら, 同相写像 \(\tau_i \circ \tau_j^{-1} \colon \mathbb{C}^r \times U_{ij} \to \mathbb{C}^r \times U_{ij}\) は, ある \(n\times n\) 行列 \(g \in \textrm{GL}(n;\mathcal{O}_X(U_{ij}))\) によって, \(\tau_i \circ \tau_j^{-1} (l,z) = (g(z)l,z)\) (\((l,z) \in \mathbb{C}^r \times U_{ij}\)) と表されることを正則ベクトル束の定義としてもよい. そのときは, 正則ベクトル束の正則構造は \(\{\tau_i\}_{i\in I}\) で与えられる. 本PDFではこの定義を用いる.
 \end{rem}
 
@@ -1215,7 +1222,6 @@ Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\
     \(L\) に値を持つ \(U\) 上の \(C^\infty\) 切断の集合を \(\mathcal{A}_X(L)(U)\) とおくとき, 対応 \(U\mapsto \mathcal{A}_X(L)(U)\) によって \(\mathcal{A}_X(L)\) は層となる.
 \end{prop*}
 
-<<<<<<< HEAD
 \begin{defi*}
     \(\mathcal{A}\) をRiemann面 \(X\) 上の環の層とし, \(\mathcal{M}\) を \(\mathcal{O}_X\)-代数の層とする. このとき,
     \begin{enumerate}
@@ -1263,9 +1269,25 @@ Leray被覆は任意の細分 \(\mathcal{V} > \mathcal{U}\) について \(H^1(\
     \[
         \tau_i \circ s \colon U \to  \mathbb{C}^r \times U;z\mapsto (g_i(z),z)
     \]
-    と表示できた. \(U\subset U_i\) 上, この表示は一意的であるため, \(g_i  = (f_1,\ldots,f_r)\) と表すとき, 対応 \(s \mapsto (f_1,\ldots,f_r)\) によって明らかに \(\mathcal{O}_X(L)(U) \simeq \mathcal{O}(U)\) となる. 従って \(L\) から \(\mathcal{O}_X(L)\) が階数 \(r\) の局所自由 \(\mathcal{O}_X\)-加群の層であることがわかった.
+    と表示できた. \(U\subset U_i\) 上, この表示は一意的であるため, \(g_i  = (f_1,\ldots,f_r)\) と表すとき, 対応 \(s \mapsto (s_1,\ldots,s_r)\) は環同型 \(\mathcal{O}_X(L)(U) \simeq \mathcal{O}(U)^r\) となる. 単射性は明らかである. 全射性は, 与えられた正則写像 \(f = (f_1, \ldots, f_r) \in \mathcal{O}_X(U)\) に対して \(f\) に対応するような \(U\) 上の正則切断 \(s \in \mathcal{O}_X(L)(U)\) を構成すればよい. (ここに全射性の証明を書く.)\footnote{埋まらない行間} また, \(f\cdot s \mapsto (fs_1,\ldots,fs_r) = f\cdot (s_1,\ldots,s_r)\) であるから, この写像 \(U \to \mathbb{C}^r \times U;z\mapsto (g_i(z),z)\) は \(\mathcal{O}_X(U)\)-代数の準同型である. 従って \(L\) から \(\mathcal{O}_X(L)\) が階数 \(r\) の局所自由 \(\mathcal{O}_X\)-加群の層であることがわかった.
 
-    次に, \(\mathcal{L}\) を階数 \(r\) の局所 \(\mathcal{O}_X\)-加群の層とする.
-
+    次に, \(\mathcal{L}\) を階数 \(r\) の局所 \(\mathcal{O}_X\)-加群の層とする. このとき, 開被覆 \(\mathcal{U} = \{U_i\}_{i \in I}\) で \(\mathcal{L}|_{U_i} \simeq (\mathcal{O}_X|_{U_i})^r\) となるようなものが取れる. このとき, \(\mathcal{L}|_{U_i}\) から \((\mathcal{O}_X|_{U_i})^r\) への \(\mathcal{O}_{U_i}\)-加群の同型写像を \(\sigma_i \colon \mathcal{L}|_{U_i} \to (\mathcal{O}_X|_{U_i})^r = (\mathcal{O}_{U_i})^r\) とおく. このとき, 同型写像
+    \[
+        (\sigma_i(U_{ij})) \circ (\sigma_j(U_{ij}))^{-1} \colon (\mathcal{O}_{U_i}(U_i \cap U_j))^r \to (\mathcal{O}_{U_j}(U_j \cap U_i))^r
+    \]
+    の表現行列を \(g_{ij}\) とおく. \(\sigma_j(U_{ij}) \circ \sigma_i(U_{ij})^{-1}\) が \(\mathcal{O}_{U_{ij}}\) -加群の同型写像であることから, その表現行列 \(g_{ij}\) は正則行列である. \(\sigma_i(U_i) \circ \sigma_i(U_i)^{-1} = \id_{\mathcal{O}_X(U_i)}\), であり, \(U_{ijk} \neq \emptyset\) 上, \(\sigma_j(U_{ijk}) \circ \sigma_i(U_{ijk})^{-1} = (\sigma_j(U_{ijk}) \circ \sigma_k(U_{ijk})^{-1})\circ (\sigma_k(U_{ijk}) \circ \sigma_i(U_{ijk})^{-1})\) より,
+    \begin{enumerate}
+        \item \(g_{ii} = E_r\) \label{condition:identity}
+        \item \(g_{ik} = g_{ij}g_{jk}\) \label{condition:cocycle}
+    \end{enumerate}
+    を満たす. この行列の族を使い正則ベクトル束を構成する. 各 \(i\in I\) について, \(\pi_i \colon U_i \to \mathbb{C}^r \times U_i\) を第2射影とする. このとき, \(\coprod_{i\in I}\mathbb{C}^r \times U_i\) 上の関係 \(\sim\) を次で与える:
+    \[
+        (l_i,z) \sim (l_j ,z) \iff (l_j,z) = (g_{ij}(z)l_i,z).
+    \] 
+    \(g_{ij}\) が正則行列であることと, 関係式 \ref{condition:identity}, \ref{condition:cocycle} より, 関係 \(\sim\) は同値関係となる. この関係 \(\sim\) によって得られる商空間を \(L:= \coprod_{i\in I}\mathbb{C}^r \times U_i/\sim\) とおく. これが正則ベクトル束となることを見る. \(\pi^\prime \colon \coprod_{i\in I}\mathbb{C}^r \times U_i \to X\) を \(x\in \mathbb{C}^r \times U_i \subset  \coprod_{i\in I}\mathbb{C}^r \times U_i\) なら \(\pi(x) = \pi_i(x)\) と定める. このとき, \((l_1,z) \simeq (l_2,z)\) なら \(\pi^\prime(l_1,z) = \pi^\prime(l_2,z)\) より, \(\pi \colon L \to X;[(l,z)] \mapsto \pi^\prime (l,z)\) が定まる. また, 包含写像 \(\iota_i \colon \mathbb{C}^r \times U_i \to \coprod_{i\in I}\mathbb{C}^r \times U_i\) と自然な射影 \(p \colon \coprod_{i\in I}\mathbb{C}^r \times U_i \to L\) の合成 \(p \circ \iota_i \colon \mathbb{C}^r \times U_i \to L\) の像は, \(g_{ii} = E_r\) より \((l_1,z),(l_2,z)\in \mathbb{C}^r \times U_i\) に対しては
+    \[
+        (l_1,z) \sim (l_2,z) \iff l_1 = l_2
+    \]
+    となることから, \(\{[(l,z)]\}\) (\(l \in \mathbb{C}^r\), \(z\in U_i\)) が完全代表系になり, \(\mathbb{C}^r \times U_i\) と同相である. また, \(\pi^{-1}(U_i) = \{[l,z] \mid (l,z) \in \mathbb{C}^r \times U_i\}\) より, \(\tau_i \colon \pi^{-1}(U_i) \to \mathbb{C}^r \times U_i;\alpha \mapsto \tau_i(\alpha)\) を \(\alpha = [(l,z)]\), \((l,z) \in \mathbb{C}^r \times U_i\) と代表元表示するとき, \(\tau_i(\alpha) = (l,z)\) と定める. \(\mathbb{C}^r \times U_i\) の元により代表元表示は一意的であるため, この写像はwell-definedである. 変換関数 \(\tau_j \circ \tau_i^{-1} \colon \mathbb{C}^r \times U_{ij} \to \mathbb{C}^r \times U_{ij}\) は, 同地関係 \(\sim\) の定義から, \(g_{ij} \in \textrm{GL}(r;\mathcal{O}_X(U_{ij}))\) によって \(\tau_j \circ \tau_i^{-1} (l,z) = (g_{ij}(z)l,z)\) と表される. また, \(\pi\) と \(\tau_i\) の定義から, 図式 \ref{graph:commutation of holomorphic bundle}は可環となっている. 従って, \(\{\tau_i\}_{i\in I}\) は正則構造となっているから, \(L\) は階数 \(r\) の正則ベクトル束となる. 正則切断の層 \(\mathcal{O}_X(L)\) が層 \(\mathcal{L}\) に同型であることを示す\footnote{埋まらない行間}. 開集合 \(U\) について, \(U\subset U_i\) となるものが取れれば, 同型 \(\mathcal{O}_X(L)|_{U_i} \simeq (\mathcal{O}_X|_{U_i})^r \simeq \mathcal{L}|_{U_i}\) より, 切断の同型 \(\mathcal{O}_X(L)(U) \simeq \mathcal{L}(U)\) が得られる. \(U\subset U_i\) となるものが存在しない場合は示すことができていない.
 \end{proof}
 \end{document}
